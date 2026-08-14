@@ -4,13 +4,13 @@
 }
 body {
   margin: 0;
-  background-color: #121212;
+
+  background-color: #1c1d1f;
 }
 
 .demo-holy-grid {
   display: grid;
   grid-template-columns: 200px 1fr 150px;
-  /* 2. header: 자동, content: 남은 공간 차지(1fr), footer: 자동 */
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header header header"
@@ -19,7 +19,6 @@ body {
   gap: 12px;
   background-color: #272727;
 
-  /* 3. 전체 화면 높이를 최소 높이로 설정 및 패딩 계산 보정 */
   min-height: 100vh;
   box-sizing: border-box;
 }
@@ -39,6 +38,7 @@ body {
 
 .hg-footer {
   grid-area: footer;
+  height: 180px;
   background-color: #121212;
   color: white;
   padding: 12px;
@@ -125,4 +125,35 @@ body {
   border: 0px;
   background-color: #272727;
   color: white;
+}
+.login-container {
+  border: 2px solid #505050;
+  width: 500px;
+  height: 700px;
+  text-align: start;
+  background: linear-gradient(
+    135deg,
+    rgba(97, 80, 25, 0.5) 0%,
+    #272727 25%,
+    #1c1d1f 100%
+  );
+  border-radius: 12px;
+  padding: 24px;
+  box-sizing: border-box;
+  margin: 100px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.info {
+  color: #d4af37;
+}
+.signInput {
+  border: 1px solid #d4af37;
+  border-radius: 8px;
+  background-color: #1c1d1f;
+  width: 400px;
+  height: 40px;
+  margin: 10px 0px 20px 0px;
 }
