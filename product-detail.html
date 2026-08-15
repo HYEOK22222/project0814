@@ -82,14 +82,52 @@
             <p>
               상품입니다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ
             </p>
-            <img
-              class="detail-image"
-              src="image-detail.png"
-              alt="상품 상세 설명"
-            />
           </div>
         </div>
       </section>
     </main>
   </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("id") || 1;
+
+        const response = await fetch(
+          `http://teacherdev09.kro.kr:10002/endpoint/api/products/${productId}`,
+        );
+
+        if (!response.ok) {
+          throw new Error("상품 정보를 불러오는데 실패했습니다!");
+        }
+
+        const result = await response.json();
+
+        if (result.success) {
+          const product = result.data;
+
+          document.querySelector(".product-category").textContent =
+            product.category;
+
+          document.querySelector(".product-name").textContent = product.name;
+
+          const priceString = product.price.toLocaleString() + "원";
+          document.querySelector(".final-price").textContent = priceString;
+          document.querySelector(".total-amount").textContent = priceString;
+
+          document.querySelector(".content-description p").textContent =
+            product.description;
+        } else {
+          // success가 false로 왔다면 에러 메시지 띄우기
+          console.error(result.message);
+          document.querySelector(".product-name").textContent =
+            "상품 정보가 없습니다.";
+        }
+      } catch (error) {
+        console.error("에러 발생:", error);
+        document.querySelector(".product-name").textContent =
+          "서버 연결에 실패했습니다.";
+      }
+    });
+  </script>
 </html>
