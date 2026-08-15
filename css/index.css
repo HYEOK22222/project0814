@@ -1,0 +1,117 @@
+.demo-holy-grid {
+  display: grid;
+  grid-template-columns: 200px 1fr 150px;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header header"
+    "content content content"
+    "footer footer footer";
+  gap: 12px;
+  background-color: #272727;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.hg-header {
+  grid-area: header;
+  background-color: #1c1d1f;
+  color: white;
+  font-weight: bold;
+}
+
+.hg-content {
+  grid-area: content;
+  padding: 15px;
+}
+
+.hg-footer {
+  grid-area: footer;
+  height: 180px;
+  background-color: #121212;
+  color: white;
+  padding: 12px;
+  text-align: center;
+}
+
+.demo-product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.demo-product-card {
+  background-color: #1c1d1f;
+  color: #ffffff;
+  border: none;
+  overflow: hidden;
+}
+
+.demo-product-card .img-placeholder {
+  height: 240px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: #065f46;
+}
+
+.demo-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  color: #cebb7b;
+  background-color: #121212;
+}
+
+.demo-nav .logo {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #d4af37;
+}
+
+.demo-nav .menu-list {
+  flex: 2;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+  gap: 25px;
+}
+
+.demo-nav .menu-list a {
+  color: #cebb7b;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.demo-nav .menu-list a:hover {
+  color: #d4af37;
+  text-decoration: underline;
+}
+
+.demo-nav button {
+  background: transparent;
+  color: #d4af37;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.demo-nav .btn-img {
+  width: 18px;
+  height: auto;
+  outline: none;
+}
+
+.demo-nav input {
+  height: 20px;
+  border-radius: 8px;
+  border: 0px;
+  background-color: #272727;
+  color: white;
+}
