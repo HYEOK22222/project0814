@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
 }
+
 body {
   margin: 0;
 
@@ -82,6 +83,7 @@ body {
   font-weight: bold;
   color: #d4af37;
 }
+
 .demo-nav .menu-list {
   flex: 2;
   margin: 0;
@@ -126,17 +128,16 @@ body {
   background-color: #272727;
   color: white;
 }
+
 .login-container {
   border: 2px solid #505050;
   width: 500px;
   height: 700px;
   text-align: start;
-  background: linear-gradient(
-    135deg,
-    rgba(97, 80, 25, 0.5) 0%,
-    #272727 25%,
-    #1c1d1f 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(97, 80, 25, 0.5) 0%,
+      #272727 25%,
+      #1c1d1f 100%);
   border-radius: 12px;
   padding: 24px;
   box-sizing: border-box;
@@ -146,9 +147,11 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .info {
   color: #d4af37;
 }
+
 .signInput {
   border: 1px solid #d4af37;
   border-radius: 8px;
@@ -156,14 +159,17 @@ body {
   width: 400px;
   height: 40px;
   margin: 10px 0px 20px 0px;
+  color: white;
 }
 
 .product-detail-page {
   max-width: 1000px;
   margin: 50px auto;
   padding: 20px;
-  color: white; /* 텍스트 기본색 */
-  box-sizing: border-box; /* 기존 컨테이너 스타일 유지 */
+  color: white;
+  /* 텍스트 기본색 */
+  box-sizing: border-box;
+  /* 기존 컨테이너 스타일 유지 */
 }
 
 /* 상단 영역 (이미지 + 상품 정보) */
@@ -183,9 +189,12 @@ body {
 .main-image {
   width: 100%;
   aspect-ratio: 1 / 1;
-  background-color: #272727; /* 기존 그리드 배경색 활용 */
-  border: 1px solid #505050; /* 기존 테두리 색상 */
-  border-radius: 12px; /* 로그인 컨테이너 둥글기 적용 */
+  background-color: #272727;
+  /* 기존 그리드 배경색 활용 */
+  border: 1px solid #505050;
+  /* 기존 테두리 색상 */
+  border-radius: 12px;
+  /* 로그인 컨테이너 둥글기 적용 */
   object-fit: cover;
   margin-bottom: 15px;
 }
@@ -214,7 +223,8 @@ body {
 
 .thumb-btn:hover,
 .thumb-btn:focus {
-  border: 2px solid #d4af37; /* 호버 시 포인트 골드 색상[cite: 1] */
+  border: 2px solid #d4af37;
+  /* 호버 시 포인트 골드 색상[cite: 1] */
 }
 
 /* --- 우측: 상품 정보 영역 --- */
@@ -226,7 +236,8 @@ body {
 }
 
 .product-category {
-  color: #cebb7b; /* 네비게이션 메뉴 텍스트 색상 차용[cite: 1] */
+  color: #cebb7b;
+  /* 네비게이션 메뉴 텍스트 색상 차용[cite: 1] */
   font-size: 0.9rem;
   margin-bottom: 10px;
   font-weight: 500;
@@ -244,13 +255,15 @@ body {
 
 .final-price {
   font-size: 2rem;
-  color: #d4af37; /* 포인트 골드 색상 적용[cite: 1] */
+  color: #d4af37;
+  /* 포인트 골드 색상 적용[cite: 1] */
 }
 
 /* 구분선 */
 .divider {
   border: 0;
-  border-top: 1px solid #505050; /* 로그인 창 테두리 색상 차용[cite: 1] */
+  border-top: 1px solid #505050;
+  /* 로그인 창 테두리 색상 차용[cite: 1] */
   margin: 20px 0;
 }
 
@@ -288,7 +301,8 @@ body {
 
 .option-select:focus,
 .input-qty:focus {
-  box-shadow: 0 0 5px rgba(212, 175, 55, 0.5); /* 골드빛 포커스 효과 */
+  box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+  /* 골드빛 포커스 효과 */
 }
 
 .product-quantity {
@@ -353,7 +367,8 @@ body {
   /* 로그인 컨테이너의 그라데이션 활용[cite: 1] */
   background: linear-gradient(135deg, rgba(97, 80, 25, 0.8) 0%, #d4af37 100%);
   border: none;
-  color: #1c1d1f; /* 대비를 위해 어두운 글자색[cite: 1] */
+  color: #1c1d1f;
+  /* 대비를 위해 어두운 글자색[cite: 1] */
 }
 
 .btn-buy:hover {
@@ -362,7 +377,8 @@ body {
 
 /* --- 하단: 상품 상세 설명 영역 --- */
 .product-bottom-area {
-  background-color: #272727; /* 그리드 컨텐츠 영역 색상[cite: 1] */
+  background-color: #272727;
+  /* 그리드 컨텐츠 영역 색상[cite: 1] */
   border-radius: 12px;
   border: 1px solid #505050;
   overflow: hidden;
@@ -371,7 +387,8 @@ body {
 /* 탭 메뉴 */
 .detail-tab-menu {
   display: flex;
-  background-color: #121212; /* footer/nav 영역 색상 차용[cite: 1] */
+  background-color: #121212;
+  /* footer/nav 영역 색상 차용[cite: 1] */
   border-bottom: 1px solid #505050;
 }
 
@@ -388,7 +405,8 @@ body {
 }
 
 .tab-btn:hover {
-  color: #d4af37; /* 네비게이션 a태그 호버 색상 차용[cite: 1] */
+  color: #d4af37;
+  /* 네비게이션 a태그 호버 색상 차용[cite: 1] */
 }
 
 .tab-btn.active {
