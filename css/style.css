@@ -134,12 +134,10 @@ body {
   width: 500px;
   height: 700px;
   text-align: start;
-  background: linear-gradient(
-    135deg,
-    rgba(97, 80, 25, 0.5) 0%,
-    #272727 25%,
-    #1c1d1f 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(97, 80, 25, 0.5) 0%,
+      #272727 25%,
+      #1c1d1f 100%);
   border-radius: 12px;
 
   padding: 50px 24px;
@@ -152,9 +150,11 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+
 .login-container form {
   margin: auto 0;
 }
+
 .info {
   color: #d4af37;
 }
