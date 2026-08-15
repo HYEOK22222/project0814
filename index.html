@@ -1,9 +1,34 @@
 <!doctype html>
+<<<<<<< HEAD
+<html lang="en">
+=======
 <html lang="ko">
+>>>>>>> 9ba89b942d4edf7b7985b4a51896bdacd01fe322
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>전설의 시작</title>
+<<<<<<< HEAD
+  </head>
+  <body>
+    <button id="getBtn2">버튼</button>
+    <script>
+      document
+        .getElementById("getBtn2")
+        .addEventListener("click", async (e) => {
+          try {
+            const response = await fetch(
+              "http://teacherdev09.kro.kr:10002/endpoint/swaggerui/index.html",
+            );
+            if (!response.ok) throw new Error("서비스 요청실패");
+            const data = await response.json();
+            console.log(data);
+          } catch (e) {
+            console.error(e.message);
+          }
+        });
+    </script>
+=======
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
@@ -61,5 +86,6 @@
 
       <div class="hg-footer"></div>
     </section>
+>>>>>>> 9ba89b942d4edf7b7985b4a51896bdacd01fe322
   </body>
 </html>
