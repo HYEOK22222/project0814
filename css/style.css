@@ -138,6 +138,7 @@ body {
       rgba(97, 80, 25, 0.5) 0%,
       #272727 25%,
       #1c1d1f 100%);
+
   border-radius: 12px;
 
   padding: 50px 24px;
@@ -430,6 +431,7 @@ body {
   margin-top: 30px;
   border-radius: 8px;
 }
+
 .noneType-btn {
   background: transparent;
   border: none;
