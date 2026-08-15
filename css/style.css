@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
 }
+
 body {
   margin: 0;
 
@@ -82,6 +83,7 @@ body {
   font-weight: bold;
   color: #d4af37;
 }
+
 .demo-nav .menu-list {
   flex: 2;
   margin: 0;
@@ -126,17 +128,16 @@ body {
   background-color: #272727;
   color: white;
 }
+
 .login-container {
   border: 2px solid #505050;
   width: 500px;
   height: 700px;
   text-align: start;
-  background: linear-gradient(
-    135deg,
-    rgba(97, 80, 25, 0.5) 0%,
-    #272727 25%,
-    #1c1d1f 100%
-  );
+  background: linear-gradient(135deg,
+      rgba(97, 80, 25, 0.5) 0%,
+      #272727 25%,
+      #1c1d1f 100%);
   border-radius: 12px;
   padding: 24px;
   box-sizing: border-box;
@@ -146,9 +147,11 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .info {
   color: #d4af37;
 }
+
 .signInput {
   border: 1px solid #d4af37;
   border-radius: 8px;
@@ -156,4 +159,8 @@ body {
   width: 400px;
   height: 40px;
   margin: 10px 0px 20px 0px;
+}
+
+.signInput {
+  color: white;
 }
