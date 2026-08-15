@@ -140,6 +140,7 @@ body {
     #272727 25%,
     #1c1d1f 100%
   );
+
   border-radius: 12px;
 
   padding: 50px 24px;
@@ -153,8 +154,12 @@ body {
   align-items: center;
 }
 .login-container form {
-  margin: auto 0;
+  width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 }
+
 .info {
   color: #d4af37;
 }
@@ -344,14 +349,16 @@ body {
 }
 
 .btn-wishlist,
-.btn-cart {
+.btn-cart,
+.btn-login {
   background-color: #272727;
   border: 1px solid #d4af37;
   color: #d4af37;
 }
 
 .btn-wishlist:hover,
-.btn-cart:hover {
+.btn-cart:hover,
+.btn-login:hover {
   background-color: rgba(212, 175, 55, 0.1);
 }
 
@@ -424,4 +431,18 @@ body {
   height: auto;
   margin-top: 30px;
   border-radius: 8px;
+}
+.noneType-btn {
+  background: transparent;
+  border: none;
+  color: #cebb7b;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 10px;
+}
+
+.noneType-btn:hover {
+  color: #d4af37;
+  margin: 0px;
 }
