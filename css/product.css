@@ -1,0 +1,220 @@
+.product-detail-page {
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 20px;
+  color: white;
+  box-sizing: border-box;
+}
+
+.product-top-area {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+}
+
+.product-image-wrap {
+  flex: 1;
+  min-width: 350px;
+}
+
+.thumbnail-list {
+  display: flex;
+  gap: 10px;
+}
+
+.thumb-btn {
+  width: 480px;
+  height: 480px;
+  background-color: #1c1d1f;
+  border: 1px solid #505050;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
+}
+
+.thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb-btn:hover,
+.thumb-btn:focus {
+  border: 2px solid #d4af37;
+}
+
+.product-info-wrap {
+  flex: 1;
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-category {
+  color: #cebb7b;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.product-name {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.product-price-info {
+  margin-bottom: 20px;
+}
+
+.final-price {
+  font-size: 2rem;
+  color: #d4af37;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid #505050;
+  margin: 20px 0;
+}
+
+.product-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.option-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.option-label {
+  color: #cebb7b;
+  font-weight: bold;
+}
+
+.option-select,
+.input-qty {
+  border: 1px solid #d4af37;
+  border-radius: 8px;
+  background-color: #1c1d1f;
+  color: white;
+  height: 40px;
+  padding: 0 15px;
+  width: 250px;
+  outline: none;
+}
+
+.option-select:focus,
+.input-qty:focus {
+  box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+}
+
+.product-quantity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-qty {
+  width: 100px;
+  text-align: right;
+}
+
+.total-price-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  font-size: 1.2rem;
+}
+
+.total-label {
+  color: #cebb7b;
+  font-weight: bold;
+}
+
+.total-amount {
+  font-size: 2.2rem;
+  color: #d4af37;
+}
+
+.product-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* 찜하기, 장바구니 버튼 색상 */
+.btn-wishlist,
+.btn-cart {
+  background-color: #272727;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+}
+
+.btn-wishlist:hover,
+.btn-cart:hover {
+  background-color: rgba(212, 175, 55, 0.1);
+}
+
+/* 바로 구매 버튼 색상 */
+.btn-buy {
+  background: linear-gradient(135deg, rgba(97, 80, 25, 0.8) 0%, #d4af37 100%);
+  border: none;
+  color: #1c1d1f;
+}
+
+.btn-buy:hover {
+  opacity: 0.9;
+}
+
+.product-bottom-area {
+  background-color: #272727;
+  border-radius: 12px;
+  border: 1px solid #505050;
+  overflow: hidden;
+}
+
+.detail-tab-menu {
+  display: flex;
+  background-color: #121212;
+  border-bottom: 1px solid #505050;
+}
+
+.tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #cebb7b;
+  padding: 18px 0;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.tab-btn:hover {
+  color: #d4af37;
+}
+
+.tab-btn.active {
+  color: #d4af37;
+  font-weight: bold;
+  border-bottom: 3px solid #d4af37;
+  background-color: #1c1d1f;
+}
+
+.detail-tab-content {
+  padding: 40px;
+  color: white;
+  line-height: 1.6;
+}
+
+.content-description {
+  text-align: center;
+}
