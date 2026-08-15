@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>상품 상세 화면</title>
+  </head>
+  <body>
+    <main class="product-detail-page">
+      <section class="product-top-area">
+        <div class="product-image-wrap">
+          <img
+            class="main-image"
+            src="placeholder.jpg"
+            alt="상품 메인 이미지"
+          />
+          <div class="thumbnail-list">
+            <button class="thumb-btn">
+              <img src="thumb1.jpg" alt="썸네일 1" />
+            </button>
+            <button class="thumb-btn">
+              <img src="thumb2.jpg" alt="썸네일 2" />
+            </button>
+            <button class="thumb-btn">
+              <img src="thumb3.jpg" alt="썸네일 3" />
+            </button>
+          </div>
+        </div>
+
+        <div class="product-info-wrap">
+          <p class="product-category">카테고리 > 하위 카테고리</p>
+          <h1 class="product-name">상품 이름ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</h1>
+
+          <div class="product-price-info">
+            <strong class="final-price">1,000,000,000원</strong>
+          </div>
+
+          <hr class="divider" />
+
+          <div class="product-options">
+            <div class="option-group">
+              <label class="option-label" for="color-select">색상</label>
+              <select class="option-select" id="color-select">
+                <option value="">색상 선택</option>
+                <option value="black">블랙</option>
+                <option value="white">화이트</option>
+              </select>
+            </div>
+            <div class="option-group">
+              <label class="option-label" for="size-select">사이즈</label>
+              <select class="option-select" id="size-select">
+                <option value="">사이즈 선택</option>
+                <option value="s">S</option>
+                <option value="m">M</option>
+                <option value="l">L</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="product-quantity">
+            <span class="quantity-label">수량</span>
+            <div class="quantity-controls">
+              <input class="input-qty" type="number" value="1" min="1" />
+            </div>
+          </div>
+
+          <hr class="divider" />
+
+          <div class="total-price-wrap">
+            <span class="total-label">총 상품 금액</span>
+            <strong class="total-amount">1,000,000,000원</strong>
+          </div>
+
+          <div class="product-actions">
+            <button class="btn-action btn-wishlist">찜하기</button>
+            <button class="btn-action btn-cart">장바구니</button>
+            <button class="btn-action btn-buy">바로 구매</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="product-bottom-area">
+        <nav class="detail-tab-menu">
+          <button class="tab-btn active">상품상세</button>
+          <button class="tab-btn">상품평 (120)</button>
+          <button class="tab-btn">상품문의</button>
+          <button class="tab-btn">배송/교환안내</button>
+        </nav>
+
+        <div class="detail-tab-content">
+          <div class="content-description">
+            <p>
+              상품입니다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ
+            </p>
+            <img
+              class="detail-image"
+              src="image-detail.png"
+              alt="상품 상세 설명"
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+    <script>
+      // 1. API 주소 설정 (baseURL)
+      const baseUrl = "http://teacherdev09.kro.kr:10002"; // Swagger UI 주소에서 도메인 부분 추출
+
+      // 2. 상품 ID 가져오기 (예: URL에 ?id=1 형식으로 전달된다고 가정)
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get("id") || 1; // ID가 없으면 기본값 1 사용 (테스트용)
+
+      // 3. 페이지가 로드될 때 데이터 가져오기
+      document.addEventListener("DOMContentLoaded", () => {
+        fetchProductDetail(productId);
+      });
+
+      // 4. API 호출 함수
+      async function fetchProductDetail(id) {
+        try {
+          // fetch() 함수를 사용하여 GET 요청 전송
+          const response = await fetch(`${baseUrl}/api/products/${id}`);
+
+          // 응답이 성공적인지 확인
+          if (!response.ok) {
+            throw new Error(
+              `상품 정보를 가져오는데 실패했습니다. (상태 코드: ${response.status})`,
+            );
+          }
+
+          // JSON 형태로 응답 데이터 파싱
+          const productData = await response.json();
+
+          // 5. 가져온 데이터를 HTML 화면에 렌더링
+          renderProductData(productData);
+        } catch (error) {
+          console.error("API 요청 실패:", error);
+          alert(error.message); // 요구사항: API요청 실패시 success, message를 확인하여 오류 메시지를 화면에 출력
+        }
+      }
+
+      // 5. 가져온 데이터를 HTML 요소에 적용하는 함수
+      function renderProductData(product) {
+        // HTML 요소 선택 및 값 변경
+
+        // 카테고리 적용
+        const categoryElement = document.querySelector(".product-category");
+        if (categoryElement) categoryElement.textContent = product.category;
+
+        // 상품명 적용
+        const nameElement = document.querySelector(".product-name");
+        if (nameElement) nameElement.textContent = product.name;
+
+        // 가격 적용 (숫자에 콤마 추가)
+        const priceElement = document.querySelector(".final-price");
+        if (priceElement)
+          priceElement.textContent = `${product.price.toLocaleString()}원`;
+
+        // 총 상품 금액 기본값 적용
+        const totalAmountElement = document.querySelector(".total-amount");
+        if (totalAmountElement)
+          totalAmountElement.textContent = `${product.price.toLocaleString()}원`;
+
+        // 상세 설명 적용
+        const descriptionElement = document.querySelector(
+          ".content-description p",
+        );
+        if (descriptionElement)
+          descriptionElement.textContent = product.description;
+
+        // 수량 조작 이벤트 (옵션)
+        // 수량이 변경될 때 총 상품 금액이 변경되도록 설정할 수 있습니다.
+        const qtyInput = document.querySelector(".input-qty");
+        if (qtyInput) {
+          qtyInput.addEventListener("change", (e) => {
+            const qty = parseInt(e.target.value);
+            // 재고(stockQuantity)를 초과하지 못하게 설정
+            if (qty > product.stockQuantity) {
+              alert(`현재 남은 재고는 ${product.stockQuantity}개 입니다.`);
+              e.target.value = product.stockQuantity;
+            }
+            const totalPrice = product.price * parseInt(e.target.value);
+            totalAmountElement.textContent = `${totalPrice.toLocaleString()}원`;
+          });
+        }
+      }
+    </script>
+  </body>
+</html>
