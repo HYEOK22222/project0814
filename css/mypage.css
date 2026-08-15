@@ -1,0 +1,32 @@
+.user-container {
+  border: 2px solid #505050;
+  grid-area: content;
+  width: 400px;
+  height: 400px;
+  text-align: start;
+  background: linear-gradient(
+    135deg,
+    rgba(97, 80, 25, 0.5) 0%,
+    #272727 25%,
+    #1c1d1f 100%
+  );
+  border-radius: 12px;
+  padding: 50px 24px;
+  box-sizing: border-box;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-container form {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info {
+  margin: 10px 0px 20px 0px;
+  color: white;
+}
