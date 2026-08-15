@@ -159,8 +159,277 @@ body {
   width: 400px;
   height: 40px;
   margin: 10px 0px 20px 0px;
+  color: white;
 }
 
-.signInput {
+.product-detail-page {
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 20px;
   color: white;
+  /* 텍스트 기본색 */
+  box-sizing: border-box;
+  /* 기존 컨테이너 스타일 유지 */
+}
+
+/* 상단 영역 (이미지 + 상품 정보) */
+.product-top-area {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+}
+
+/* --- 좌측: 상품 이미지 영역 --- */
+.product-image-wrap {
+  flex: 1;
+  min-width: 350px;
+}
+
+.main-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #272727;
+  /* 기존 그리드 배경색 활용 */
+  border: 1px solid #505050;
+  /* 기존 테두리 색상 */
+  border-radius: 12px;
+  /* 로그인 컨테이너 둥글기 적용 */
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.thumbnail-list {
+  display: flex;
+  gap: 10px;
+}
+
+.thumb-btn {
+  width: 480px;
+  height: 480px;
+  background-color: #1c1d1f;
+  border: 1px solid #505050;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
+}
+
+.thumb-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumb-btn:hover,
+.thumb-btn:focus {
+  border: 2px solid #d4af37;
+  /* 호버 시 포인트 골드 색상[cite: 1] */
+}
+
+/* --- 우측: 상품 정보 영역 --- */
+.product-info-wrap {
+  flex: 1;
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-category {
+  color: #cebb7b;
+  /* 네비게이션 메뉴 텍스트 색상 차용[cite: 1] */
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.product-name {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.product-price-info {
+  margin-bottom: 20px;
+}
+
+.final-price {
+  font-size: 2rem;
+  color: #d4af37;
+  /* 포인트 골드 색상 적용[cite: 1] */
+}
+
+/* 구분선 */
+.divider {
+  border: 0;
+  border-top: 1px solid #505050;
+  /* 로그인 창 테두리 색상 차용[cite: 1] */
+  margin: 20px 0;
+}
+
+/* --- 상품 옵션 & 수량 선택 --- */
+.product-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.option-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.option-label {
+  color: #cebb7b;
+  font-weight: bold;
+}
+
+/* 기존 로그인 입력창(.signInput) 스타일 차용[cite: 1] */
+.option-select,
+.input-qty {
+  border: 1px solid #d4af37;
+  border-radius: 8px;
+  background-color: #1c1d1f;
+  color: white;
+  height: 40px;
+  padding: 0 15px;
+  width: 250px;
+  outline: none;
+}
+
+.option-select:focus,
+.input-qty:focus {
+  box-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+  /* 골드빛 포커스 효과 */
+}
+
+.product-quantity {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-qty {
+  width: 100px;
+  text-align: right;
+}
+
+/* --- 총 상품 금액 --- */
+.total-price-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  font-size: 1.2rem;
+}
+
+.total-label {
+  color: #cebb7b;
+  font-weight: bold;
+}
+
+.total-amount {
+  font-size: 2.2rem;
+  color: #d4af37;
+}
+
+/* --- 구매 버튼 그룹 --- */
+.product-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-action {
+  flex: 1;
+  height: 50px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-wishlist,
+.btn-cart {
+  background-color: #272727;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+}
+
+.btn-wishlist:hover,
+.btn-cart:hover {
+  background-color: rgba(212, 175, 55, 0.1);
+}
+
+.btn-buy {
+  /* 로그인 컨테이너의 그라데이션 활용[cite: 1] */
+  background: linear-gradient(135deg, rgba(97, 80, 25, 0.8) 0%, #d4af37 100%);
+  border: none;
+  color: #1c1d1f;
+  /* 대비를 위해 어두운 글자색[cite: 1] */
+}
+
+.btn-buy:hover {
+  opacity: 0.9;
+}
+
+/* --- 하단: 상품 상세 설명 영역 --- */
+.product-bottom-area {
+  background-color: #272727;
+  /* 그리드 컨텐츠 영역 색상[cite: 1] */
+  border-radius: 12px;
+  border: 1px solid #505050;
+  overflow: hidden;
+}
+
+/* 탭 메뉴 */
+.detail-tab-menu {
+  display: flex;
+  background-color: #121212;
+  /* footer/nav 영역 색상 차용[cite: 1] */
+  border-bottom: 1px solid #505050;
+}
+
+.tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #cebb7b;
+  padding: 18px 0;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.tab-btn:hover {
+  color: #d4af37;
+  /* 네비게이션 a태그 호버 색상 차용[cite: 1] */
+}
+
+.tab-btn.active {
+  color: #d4af37;
+  font-weight: bold;
+  border-bottom: 3px solid #d4af37;
+  background-color: #1c1d1f;
+}
+
+/* 탭 내용 */
+.detail-tab-content {
+  padding: 40px;
+  color: white;
+  line-height: 1.6;
+}
+
+.content-description {
+  text-align: center;
+}
+
+.detail-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 30px;
+  border-radius: 8px;
 }
