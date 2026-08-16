@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>전설의 시작</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/index.css" />
 </head>
 
 <body>
@@ -13,15 +14,17 @@
     <div class="hg-header">
       <nav class="demo-nav">
         <div class="logo">전설의 시작</div>
-        <input type="text" placeholder="검색어를 입력하세요." />
-        <img class="btn-img" src="search_icon.png" alt="검색버튼" />
         <ul class="menu-list">
           <li><a href="">상품목록</a></li>
           <li><a href="">리뷰</a></li>
           <li><a href="">주문</a></li>
-          <li><a href="login-page.html">로그인</a></li>
+          <li><a href="login-page.html" id="login-page">로그인</a></li>
+          <li><a href="mypage.html" style="display: none;" class="loginout">내 정보</a></li>
+          <li><a href="" style="display: none;" class="loginout">로그아웃</a></li>
         </ul>
+        <input type="text" placeholder="검색어를 입력하세요." />
         <button>
+          <img class="btn-img" src="search_icon.png" alt="검색버튼" />
         </button>
       </nav>
     </div>
@@ -60,8 +63,19 @@
       </section>
     </div>
 
-    <div class="hg-footer"></div>
-  </section>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const isLoggedIn = sessionStorage.getItem("accessToken");
+        const loginButton = document.querySelector("#login-page");
+        if (isLoggedIn && loginButton) {
+          loginButton.style.display = "none"
+          const logout = document.querySelectorAll(".loginout")
+          logout.forEach(e => {
+            e.style.display = "inline"
+          })
+        }
+      })
+    </script>
 </body>
 
 </html>
