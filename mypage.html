@@ -14,7 +14,7 @@
   <section class="demo-holy-grid">
     <div class="hg-header">
       <nav class="demo-nav">
-        <div class="logo">전설의 시작</div>
+        <div class="logo"><a href="index.html">전설의 시작</a></div>
         <ul class="menu-list">
           <li><a href="">상품목록</a></li>
           <li><a href="">리뷰</a></li>
@@ -43,10 +43,37 @@
   </section>
 </body>
 <script>
+  (async () => {
+    try {
+      const token = sessionStorage.getItem("accessToken");
+      const response = await fetch(
+        "http://teacherdev09.kro.kr:10002/endpoint/api/users/me",
+        {
+          method: "GET",
+          headers: { Authorization: "Bearer " + token },
+        });
+      if (!token) {
+        alert('로그인이 필요한 페이지 잆니다.');
+        window.location.href = "./index.html";
+        return;
+      }
+      if (!response.ok) {
+        throw new Error("서버 연결 실패")
+      }
+      const data = await response.json();
+      document.querySelector("#name").textContent = "회원 이름 : " + data.data.name;
+      document.querySelector("#email").textContent = "회원 이메일 : " + data.data.email;
+      document.querySelector("#address").textContent = "회원 주소 : " + data.data.address;
+    } catch (error) {
+      alert(error.message);
+    }
+  })();
+
   document.querySelector("#logout-btn").addEventListener("click", () => {
     sessionStorage.removeItem("accessToken");
-    alert('로그아웃 되었습니다')
-  });
+    alert('로그아웃 되었습니다');
+    window.location.href = "./index.html";
+  })
 </script>
 
 </html>
