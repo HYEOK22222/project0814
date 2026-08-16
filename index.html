@@ -13,14 +13,14 @@
   <section class="demo-holy-grid">
     <div class="hg-header">
       <nav class="demo-nav">
-        <div class="logo">전설의 시작</div>
+        <div class="logo"><a href="index.html">전설의 시작</a></div>
         <ul class="menu-list">
           <li><a href="">상품목록</a></li>
           <li><a href="">리뷰</a></li>
           <li><a href="">주문</a></li>
           <li><a href="login-page.html" id="login-page">로그인</a></li>
           <li><a href="mypage.html" style="display: none;" class="loginout">내 정보</a></li>
-          <li><a href="" style="display: none;" class="loginout">로그아웃</a></li>
+          <li><a href="" style="display: none;" id="logout-btn" class="loginout">로그아웃</a></li>
         </ul>
         <input type="text" placeholder="검색어를 입력하세요." />
         <button>
@@ -75,6 +75,11 @@
           })
         }
       })
+
+      document.querySelector("#logout-btn").addEventListener("click", () => {
+        sessionStorage.removeItem("accessToken");
+        alert('로그아웃 되었습니다')
+      });
     </script>
 </body>
 
