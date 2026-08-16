@@ -66,10 +66,12 @@
   background-color: #121212;
 }
 
-.demo-nav .logo {
+.demo-nav .logo a {
+  text-decoration: none;
   font-size: 1.3rem;
   font-weight: bold;
   color: #d4af37;
+  font-weight: 500;
 }
 
 .demo-nav .menu-list {
