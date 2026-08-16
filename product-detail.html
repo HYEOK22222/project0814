@@ -1,134 +1,137 @@
 <!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>상품 상세 화면</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/product.css" />
-  </head>
-  <body>
-    <main class="product-detail-page">
-      <section class="product-top-area">
-        <div class="product-image-wrap">
-          <div class="thumbnail-list">
-            <button class="thumb-btn">
-              <img src="thumb1.jpg" alt="썸네일 1" />
-            </button>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>상품 상세 화면</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/product.css" />
+</head>
+
+<body>
+  <main class="product-detail-page">
+    <section class="product-top-area">
+      <div class="product-image-wrap">
+        <div class="thumbnail-list">
+          <button class="thumb-btn">
+            <img src="thumb1.jpg" alt="썸네일 1" />
+          </button>
+        </div>
+      </div>
+
+      <div class="product-info-wrap">
+        <p class="product-category">카테고리 > 하위 카테고리</p>
+        <h1 class="product-name">상품 이름ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</h1>
+
+        <div class="product-price-info">
+          <strong class="final-price">1,000,000,000원</strong>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="product-options">
+          <div class="option-group">
+            <label class="option-label" for="color-select">색상</label>
+            <select class="option-select" id="color-select">
+              <option value="">색상 선택</option>
+              <option value="black">블랙</option>
+              <option value="white">화이트</option>
+            </select>
+          </div>
+          <div class="option-group">
+            <label class="option-label" for="size-select">사이즈</label>
+            <select class="option-select" id="size-select">
+              <option value="">사이즈 선택</option>
+              <option value="s">S</option>
+              <option value="m">M</option>
+              <option value="l">L</option>
+            </select>
           </div>
         </div>
 
-        <div class="product-info-wrap">
-          <p class="product-category">카테고리 > 하위 카테고리</p>
-          <h1 class="product-name">상품 이름ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ</h1>
-
-          <div class="product-price-info">
-            <strong class="final-price">1,000,000,000원</strong>
-          </div>
-
-          <hr class="divider" />
-
-          <div class="product-options">
-            <div class="option-group">
-              <label class="option-label" for="color-select">색상</label>
-              <select class="option-select" id="color-select">
-                <option value="">색상 선택</option>
-                <option value="black">블랙</option>
-                <option value="white">화이트</option>
-              </select>
-            </div>
-            <div class="option-group">
-              <label class="option-label" for="size-select">사이즈</label>
-              <select class="option-select" id="size-select">
-                <option value="">사이즈 선택</option>
-                <option value="s">S</option>
-                <option value="m">M</option>
-                <option value="l">L</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="product-quantity">
-            <span class="quantity-label">수량</span>
-            <div class="quantity-controls">
-              <input class="input-qty" type="number" value="1" min="1" />
-            </div>
-          </div>
-
-          <hr class="divider" />
-
-          <div class="total-price-wrap">
-            <span class="total-label">총 상품 금액</span>
-            <strong class="total-amount">1,000,000,000원</strong>
-          </div>
-
-          <div class="product-actions">
-            <button class="btn-action btn-wishlist">찜하기</button>
-            <button class="btn-action btn-cart">장바구니</button>
-            <button class="btn-action btn-buy">바로 구매</button>
+        <div class="product-quantity">
+          <span class="quantity-label">수량</span>
+          <div class="quantity-controls">
+            <input class="input-qty" type="number" value="1" min="1" />
           </div>
         </div>
-      </section>
 
-      <section class="product-bottom-area">
-        <nav class="detail-tab-menu">
-          <button class="tab-btn active">상품상세</button>
-          <button class="tab-btn">상품평 (120)</button>
-          <button class="tab-btn">상품문의</button>
-          <button class="tab-btn">배송/교환안내</button>
-        </nav>
+        <hr class="divider" />
 
-        <div class="detail-tab-content">
-          <div class="content-description">
-            <p>
-              상품입니다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ
-            </p>
-          </div>
+        <div class="total-price-wrap">
+          <span class="total-label">총 상품 금액</span>
+          <strong class="total-amount">1,000,000,000원</strong>
         </div>
-      </section>
-    </main>
-  </body>
-  <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-      try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get("id") || 1;
 
-        const response = await fetch(
-          `http://teacherdev09.kro.kr:10002/endpoint/api/products/${productId}`,
-        );
+        <div class="product-actions">
+          <button class="btn-action btn-wishlist">찜하기</button>
+          <button class="btn-action btn-cart">장바구니</button>
+          <button class="btn-action btn-buy">바로 구매</button>
+        </div>
+      </div>
+    </section>
 
-        if (!response.ok) {
-          throw new Error("상품 정보를 불러오는데 실패했습니다!");
-        }
+    <section class="product-bottom-area">
+      <nav class="detail-tab-menu">
+        <button class="tab-btn active">상품상세</button>
+        <button class="tab-btn">상품평 (120)</button>
+        <button class="tab-btn">상품문의</button>
+        <button class="tab-btn">배송/교환안내</button>
+      </nav>
 
-        const result = await response.json();
+      <div class="detail-tab-content">
+        <div class="content-description">
+          <p>
+            상품입니다ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get("id") || 1;
 
-        if (result.success) {
-          const product = result.data;
+      const response = await fetch(
+        `http://teacherdev09.kro.kr:10002/endpoint/api/products/${productId}`,
+      );
 
-          document.querySelector(".product-category").textContent =
-            product.category;
-
-          document.querySelector(".product-name").textContent = product.name;
-
-          const priceString = product.price.toLocaleString() + "원";
-          document.querySelector(".final-price").textContent = priceString;
-          document.querySelector(".total-amount").textContent = priceString;
-
-          document.querySelector(".content-description p").textContent =
-            product.description;
-        } else {
-          // success가 false로 왔다면 에러 메시지 띄우기
-          console.error(result.message);
-          document.querySelector(".product-name").textContent =
-            "상품 정보가 없습니다.";
-        }
-      } catch (error) {
-        console.error("에러 발생:", error);
-        document.querySelector(".product-name").textContent =
-          "서버 연결에 실패했습니다.";
+      if (!response.ok) {
+        throw new Error("상품 정보를 불러오는데 실패했습니다!");
       }
-    });
-  </script>
+
+      const result = await response.json();
+
+      if (result.success) {
+        const product = result.data;
+
+        document.querySelector(".product-category").textContent =
+          product.category;
+
+        document.querySelector(".product-name").textContent = product.name;
+
+        const priceString = product.price.toLocaleString() + "원";
+        document.querySelector(".final-price").textContent = priceString;
+        document.querySelector(".total-amount").textContent = priceString;
+
+        document.querySelector(".content-description p").textContent =
+          product.description;
+      } else {
+        // success가 false로 왔다면 에러 메시지 띄우기
+        console.error(result.message);
+        document.querySelector(".product-name").textContent =
+          "상품 정보가 없습니다.";
+      }
+    } catch (error) {
+      console.error("에러 발생:", error);
+      document.querySelector(".product-name").textContent =
+        "서버 연결에 실패했습니다.";
+    }
+  });
+</script>
+
 </html>
