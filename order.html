@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oreder</title>
+    <link rel="stylesheet" href="css/style.css",/>
+    <link rel="stylesheet" href="css/product.css" />
+    <link rel="stylesheet" href="css/order.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/login.css" />
+  </head>
+  <body>
+    <div class="demo-holy-grid">
+      <!-- 헤더 -->
+      <header class="hg-header">
+        <nav class="demo-nav">
+          <div class="logo">전설의 시작</div>
+          <ul class="menu-list">
+            <li><a href="">상품목록</a></li>
+            <li><a href="">리뷰</a></li>
+            <li><a href="">주문</a></li>
+            <li><a href="login-page.html">로그인</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- 메인 컨텐츠 -->
+      <main class="hg-content">
+        <div class="order-page-wrap">
+          <!-- 주문 입력 폼 -->
+          <div id="orderFormArea">
+            <h1 class="order-title">Order</h1>
+            <hr class="divider" />
+
+            <div class="order-grid">
+              <!-- 왼쪽: 옵션 및 배송 정보 선택 -->
+              <div>
+                <div class="option-group">
+                    <label class="option-label">주문 상품</label>
+                        <div
+                            style="
+                            background-color: #272727;
+                            border: 1px solid #505050;
+                            border-radius: 8px;
+                            padding: 12px 15px;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;"
+                            >
+                        <span id="orderProductName" style="font-weight: bold; color: #fff; font-size: 1.05rem"
+                             >상품 불러오는 중...</span>
+                             
+   
+  </div>
+</div>
+
+                <div class="option-group" style="margin-top: 15px">
+                  <label class="option-label">주문 수량</label>
+                  <div class="qty-control">
+                    <button type="button" class="qty-btn" id="btnMinus">
+                      -
+                    </button>
+                    <input
+                      type="number"
+                      id="qtyInput"
+                      class="input-qty"
+                      value="1"
+                      min="1"
+                      readonly
+                    />
+                    <button type="button" class="qty-btn" id="btnPlus">
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <div class="option-group" style="margin-top: 15px">
+                  <label class="option-label" for="userName">주문자 성함</label>
+                  <input type="text"
+                    id="userName"
+                    class="signInput"
+                    style="width: 100%; margin: 5px 0 0 0"
+                    placeholder="이름을 입력하세요"
+                  />
+                </div>
+
+                <div class="option-group" style="margin-top: 15px">
+                  <label class="option-label" for="userAddress"
+                    >배송지 주소</label
+                  >
+                  <input
+                    type="text"
+                    id="userAddress"
+                    class="signInput"
+                    style="width: 100%; margin: 5px 0 0 0"
+                    placeholder="배송 주소를 입력하세요"
+                  />
+                </div>
+              </div>
+
+              <!-- 오른쪽: 주문 요약 및 결제 금액 카드 -->
+              <div class="summary-card">
+                <div>
+                  <h3 style="color: #cebb7b; margin-bottom: 15px">
+                    주문 내역 요약
+                  </h3>
+
+                  <div class="summary-row">
+                    <span style="color: #bbb">선택 상품</span>
+                    <span id="summaryProductName" style="font-weight: 500"
+                      >""</span
+                    >
+                  </div>
+
+                  <div class="summary-row">
+                    <span style="color: #bbb">수량</span>
+                    <span id="summaryQty">1개</span>
+                  </div>
+
+                  <div class="summary-row">
+                    <span style="color: #bbb">배송비</span>
+                    <span style="color: #cebb7b">무료배송</span>
+                  </div>
+
+                  <div class="summary-row total">
+                    <span class="total-label">최종 결제금액</span>
+                    <span class="total-amount" id="summaryTotal"
+                      >₩</span
+                    >
+                  </div>
+                </div>
+
+                <!-- 구매하기 버튼 -->
+                <button
+                  type="button"
+                  id="btnOrder"
+                  class="btn-action btn-buy"
+                  style="margin-top: 20px"
+                >
+                  주문 완료하기
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- 주문 완료 후 성공 메시지 출력 -->
+      </main>
+
+      <!-- 푸터-->
+      <footer class="hg-footer">
+        <p>나는 바보야</p>
+      </footer>
+    </div>
+
+    <!-- 수량 연동 및 주문 처리 스크립트 -->
+    <script>
+      const currentProduct = {
+  id: 1,
+  name: "",
+  price: 0
+};
+
+const orderProductName = document.getElementById("orderProductName");
+const summaryProductName = document.getElementById("summaryProductName");
+const summaryQty = document.getElementById("summaryQty");
+const summaryTotal = document.getElementById("summaryTotal");
+
+const qtyInput = document.getElementById("qtyInput");
+const btnMinus = document.getElementById("btnMinus");
+const btnPlus = document.getElementById("btnPlus");
+const btnOrder = document.getElementById("btnOrder");
+
+
+const updateOrderSummary = () => {
+  const qty = Number(qtyInput.value);
+  const totalPrice = currentProduct.price * qty;
+
+  summaryProductName.textContent = currentProduct.name;
+  summaryQty.textContent = `${qty}개`;
+  summaryTotal.textContent = `${totalPrice.toLocaleString()}원`;
+};
+
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = urlParams.get("productId") || 1;
+  const initialQty = urlParams.get("quantity") || 1;
+
+  qtyInput.value = initialQty;
+
+  try {
+    const response = await fetch(
+      `http://teacherdev09.kro.kr:10002/endpoint/api/products/${productId}`
+    );
+
+    if (!response.ok) {
+      throw new Error(`상품 정보를 불러오는데 실패했습니다: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.success) {
+      const product = result.data;
+      currentProduct.id = product.id;
+      currentProduct.name = product.name;
+      currentProduct.price = product.price;
+
+      orderProductName.textContent = currentProduct.name;
+      updateOrderSummary();
+    } else {
+      console.error(result.message);
+    }
+  } catch (error) {
+    console.error("에러 발생:", error.message);
+  }
+});
+
+// 수량 증감 버튼 이벤트 
+btnPlus.addEventListener("click", () => {
+  let count = Number(qtyInput.value);
+  qtyInput.value = ++count;
+  updateOrderSummary();
+});
+
+btnMinus.addEventListener("click", () => {
+  let count = Number(qtyInput.value);
+  if (count > 1) {
+    qtyInput.value = --count;
+    updateOrderSummary();
+  }
+});
+
+btnOrder.addEventListener("click", async () => {
+  const userName = document.getElementById("userName").value.trim();
+  const userAddress = document.getElementById("userAddress").value.trim();
+  const qty = Number(qtyInput.value);
+
+  if (userName.length === 0) {
+    alert("주문자 성함을 입력해주세요.");
+    return;
+  }
+
+  if (userAddress.length === 0) {
+    alert("배송 주소를 입력해주세요.");
+    return;
+  }
+
+  const payload = {
+    productId: currentProduct.id,
+    quantity: qty,
+    customerName: userName,
+    shippingAddress: userAddress,
+    totalPrice: currentProduct.price * qty
+  };
+
+  try {
+    const response = await fetch(
+      "http://teacherdev09.kro.kr:10002/endpoint/api/orders",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`주문 처리 에러: ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    if (result.success) {
+      alert("주문이 성공적으로 완료되었습니다!");
+    } else {
+      alert(result.message || "주문 처리에 실패했습니다.");
+    }
+  } catch (error) {
+    console.error("에러 발생:", error.message);
+    alert("서버 연결에 실패했습니다.");
+  }
+});
+      // 초기 실행
+      updateOrderSummary();
+    </script>
+  </body>
+</html>

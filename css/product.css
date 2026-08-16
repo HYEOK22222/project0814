@@ -96,6 +96,7 @@
 .option-label {
   color: #cebb7b;
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .option-select,

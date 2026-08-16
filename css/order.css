@@ -1,0 +1,102 @@
+.hg-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 15px;
+}
+
+/* 주문 페이지 메인 카드 박스 */
+.order-page-wrap {
+  width: 100%;
+  max-width: 900px;
+  background-color: #1c1d1f;
+  border: 1px solid #505050;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}
+
+/* 주문 페이지 제목 */
+.order-title {
+  font-size: 1.8rem;
+  color: #d4af37;
+  margin-bottom: 8px;
+}
+
+/* 2단 반응형 그리드 (좌측: 옵션/입력창, 우측: 주문 요약 카드) */
+.order-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+@media (max-width: 768px) {
+  .order-grid {
+    grid-template-columns: 1fr; /* 모바일/태블릿 화면에서는 1열로 변경 */
+  }
+}
+
+/*  수량 증감 컨트롤러 영역 (+ / - 버튼 및 숫자 인풋) */
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.qty-btn {
+  width: 44px;
+  height: 44px;
+  background-color: #272727;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition:
+    background-color 0.2s,
+    transform 0.1s;
+}
+
+.qty-btn:hover {
+  background-color: rgba(212, 175, 55, 0.15);
+}
+
+.qty-btn:active {
+  transform: scale(0.95);
+}
+
+/*  주문 요약 카드 (우측 영수증 영역) */
+.summary-card {
+  background: linear-gradient(
+    135deg,
+    rgba(97, 80, 25, 0.2) 0%,
+    #272727 60%,
+    #1c1d1f 100%
+  );
+  border: 1px solid #505050;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.summary-row.total {
+  margin-top: 10px;
+  padding-top: 15px;
+  border-top: 1px dashed #505050;
+}
