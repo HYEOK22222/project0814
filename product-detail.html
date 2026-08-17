@@ -20,6 +20,7 @@
           <li><a href="">리뷰</a></li>
           <li><a href="">주문</a></li>
           <li><a href="login-page.html">로그인</a></li>
+          <li><a href="#" class="loginout" style="display: none;">로그아웃</a></li>
         </ul>
       </nav>
     </header>
@@ -151,20 +152,36 @@
 <script>
   document.addEventListener("DOMContentLoaded", async () => {
     // ==========================================
-    // 1. 공통 로그인 상태 확인 (sessionStorage 사용)
+    // 1. 공통 로그인/로그아웃 상태 확인 및 처리
     // ==========================================
     const token = sessionStorage.getItem("accessToken");
     
-    // HTML에 id="login-page"가 없으므로 href 속성으로 로그인 버튼을 찾도록 수정했습니다.
     const loginButton = document.querySelector('a[href="login-page.html"]'); 
+    const logoutButtons = document.querySelectorAll(".loginout");
     
     if (token && loginButton) {
+      // 로그인 상태일 때
       loginButton.style.display = "none";
-      const logout = document.querySelectorAll(".loginout");
-      logout.forEach(e => {
+      logoutButtons.forEach(e => {
         e.style.display = "inline";
       });
+    } else if (loginButton) {
+      // 💡 [추가된 기능] 로그인이 안 된 상태에서 '로그인' 메뉴를 누를 때
+      loginButton.addEventListener("click", () => {
+        // 로그인 완료 후 다시 돌아오기 위해 현재 페이지 주소를 기억해둡니다.
+        sessionStorage.setItem("returnUrl", window.location.href);
+      });
     }
+
+    // 로그아웃 클릭 처리
+    logoutButtons.forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault(); 
+        sessionStorage.removeItem("accessToken"); 
+        alert("로그아웃 되었습니다.");
+        window.location.reload(); 
+      });
+    });
 
     // ==========================================
     // 공통 사용 변수 (상품 ID)
@@ -173,69 +190,51 @@
     const productId = urlParams.get("id") || 1;
 
     // ==========================================
-    // 2. 상품 기본 정보 불러오기 (기존 코드 유지)
+    // 2. 상품 기본 정보 불러오기
     // ==========================================
     try {
       const response = await fetch(`http://teacherdev09.kro.kr:10002/endpoint/api/products/${productId}`);
-
-      if (!response.ok) {
-        throw new Error("상품 정보를 불러오는데 실패했습니다!");
-      }
-
+      if (!response.ok) throw new Error("상품 정보를 불러오는데 실패했습니다!");
       const result = await response.json();
 
       if (result.success) {
         const product = result.data;
         document.querySelector(".product-category").textContent = product.category;
         document.querySelector(".product-name").textContent = product.name;
-
         const priceString = product.price.toLocaleString() + "원";
         document.querySelector(".final-price").textContent = priceString;
         document.querySelector(".total-amount").textContent = priceString;
         document.querySelector(".content-description p").textContent = product.description;
       } else {
-        console.error(result.message);
         document.querySelector(".product-name").textContent = "상품 정보가 없습니다.";
       }
     } catch (error) {
-      console.error("에러 발생:", error);
       document.querySelector(".product-name").textContent = "서버 연결에 실패했습니다.";
     }
 
     // ==========================================
-    // 3. 상품평 탭 클릭 시 리뷰로 자동 스크롤 (기존 코드 유지)
+    // 3. 상품평 탭 자동 스크롤
     // ==========================================
     const tabButtons = document.querySelectorAll(".tab-btn");
     let reviewBtn = null;
-
-    tabButtons.forEach(btn => {
-      if(btn.textContent.includes("상품평")) {
-        reviewBtn = btn;
-      }
-    });
-
+    tabButtons.forEach(btn => { if(btn.textContent.includes("상품평")) reviewBtn = btn; });
     const reviewSection = document.getElementById("review-section");
 
     if (reviewBtn && reviewSection) {
       reviewBtn.addEventListener("click", () => {
-        reviewSection.scrollIntoView({
-          behavior: "smooth", 
-          block: "start"      
-        });
+        reviewSection.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
 
     // ==========================================
-    // 4. 동적 리뷰 불러오기 및 모달 기능 추가 (로그인 연동)
+    // 4. 동적 리뷰 불러오기 및 모달 기능
     // ==========================================
     const reviewsUrl = `http://teacherdev09.kro.kr:10002/endpoint/api/products/${productId}/reviews`;
 
-    // 리뷰 목록 불러오기 (GET)
     const fetchReviews = async () => {
       try {
         const response = await fetch(reviewsUrl);
         const result = await response.json();
-        
         const reviewListDiv = document.getElementById("dynamic-review-list");
         const reviewCountSpan = document.querySelector(".review-count");
 
@@ -255,77 +254,55 @@
           reviewListDiv.innerHTML = `<p class="empty-review">등록된 상품평이 없습니다. 첫 리뷰를 작성해보세요!</p>`;
         }
       } catch (error) {
-        console.error("리뷰 조회 에러:", error);
-        document.getElementById("dynamic-review-list").innerHTML = 
-          `<p class="empty-review">리뷰를 불러오는데 실패했습니다.</p>`;
+        document.getElementById("dynamic-review-list").innerHTML = `<p class="empty-review">리뷰를 불러오는데 실패했습니다.</p>`;
       }
     };
 
-    fetchReviews(); // 리뷰 목록 즉시 호출
+    fetchReviews();
 
-    // 모달 관련 요소 찾기
     const modal = document.getElementById("review-modal");
     const btnOpenModal = document.getElementById("btn-open-review-modal");
     const btnCancel = document.getElementById("btn-cancel-modal");
     const btnSubmit = document.getElementById("btn-submit-review");
 
-    // 리뷰 작성 모달 열기 (🔒 로그인 여부 체크!)
     btnOpenModal.addEventListener("click", () => {
-      // 위쪽 1번 영역에서 만든 token 변수를 확인합니다.
       if (!token) { 
         alert("로그인이 필요한 서비스입니다.");
-        // 로그인 창으로 바로 보내고 싶으시다면 아래 주석을 해제하세요.
-        // location.href = "login-page.html";
+        // 💡 [추가된 기능] 리뷰 작성하려고 했는데 로그인이 안 되어 있다면,
+        // 현재 주소를 저장하고 자동으로 로그인 페이지로 넘겨줍니다!
+        sessionStorage.setItem("returnUrl", window.location.href);
+        window.location.href = "login-page.html";
         return; 
       }
       modal.classList.remove("hidden");
     });
 
-    // 모달 닫기
     btnCancel.addEventListener("click", () => {
       modal.classList.add("hidden");
       document.getElementById("review-textarea").value = ""; 
     });
 
-    // 리뷰 등록하기 (POST)
     btnSubmit.addEventListener("click", async () => {
       const rating = document.getElementById("rating-select").value;
       const content = document.getElementById("review-textarea").value.trim();
 
-      if (!content) {
-        alert("리뷰 내용을 입력해주세요.");
-        return;
-      }
+      if (!content) { alert("리뷰 내용을 입력해주세요."); return; }
 
       try {
         const response = await fetch(reviewsUrl, {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            // 작성자 인증을 위해 서버로 보낼 때 토큰을 함께 전달합니다.
-            "Authorization": `Bearer ${token}` 
-          },
-          body: JSON.stringify({
-            rating: Number(rating),
-            content: content
-          })
+          headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+          body: JSON.stringify({ rating: Number(rating), content: content })
         });
-
         const result = await response.json();
 
         if (result.success || response.ok) {
           alert("리뷰가 성공적으로 등록되었습니다!");
           modal.classList.add("hidden"); 
           document.getElementById("review-textarea").value = ""; 
-          
-          fetchReviews(); // 방금 작성한 리뷰가 바로 보이도록 새로고침
-        } else {
-          alert("리뷰 등록에 실패했습니다.");
-        }
-      } catch (error) {
-        console.error("리뷰 등록 에러:", error);
-        alert("서버 오류가 발생했습니다.");
-      }
+          fetchReviews(); 
+        } else { alert("리뷰 등록에 실패했습니다."); }
+      } catch (error) { alert("서버 오류가 발생했습니다."); }
     });
 
   });
