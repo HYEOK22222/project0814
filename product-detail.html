@@ -78,10 +78,10 @@
           </div>
         </div>
 
-        <div class="product-quantity">
+        <div class="product-quantity" style="margin-top: 20px;">
           <span class="quantity-label">재고</span>
           <div class="quantity-controls">
-            <input class="input-qty" type="number" value="1" min="1" />
+            <span id="stock-count" style="font-weight: bold; color: #ccc;">불러오는 중...</span>
           </div>
         </div>
 
@@ -240,6 +240,7 @@
         document.querySelector(".final-price").textContent = priceString;
         document.querySelector(".total-amount").textContent = priceString;
         document.querySelector(".content-description p").textContent = product.description;
+        document.querySelector("#stock-count").textContent = product.stockQuantity + "개";
       } else {
         document.querySelector(".product-name").textContent = "상품 정보가 없습니다.";
       }
