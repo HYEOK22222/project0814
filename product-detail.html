@@ -376,6 +376,16 @@
     
     if (btnBuy) {
       btnBuy.addEventListener("click", () => {
+        // ⭐ 1. 로그인 여부(토큰) 확인
+        if (!token) {
+          alert("로그인이 필요한 서비스입니다.");
+          // 💡 (선택사항) 로그인 후 다시 이 상품으로 돌아오게 만들고 싶다면 아래 두 줄 추가!
+          sessionStorage.setItem("returnUrl", window.location.href);
+          window.location.href = "login-page.html";
+          return; // 로그인 안 했으면 여기서 멈춤! (아래 코드로 넘어가지 않음)
+        }
+
+        // ⭐ 2. 로그인이 되어있다면 정상적으로 주문 페이지로 이동
         // 💡 주문 페이지로 이동할 때, 어떤 상품을 주문하는지 알아야 하므로
         // 현재 상품의 id 값을 주소 뒤에 달아서(order.html?id=번호) 보내줍니다!
         window.location.href = `order.html?id=${productId}`;

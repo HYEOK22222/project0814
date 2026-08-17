@@ -536,3 +536,8 @@ a {
   width: 150px;
   outline: none;
 }
+
+.option-group .signInput {
+  width: 100%; /* 기존 인라인 스타일에 있던 너비 유지 */
+  margin: 0 0 0 20px; /* 위, 오른쪽, 아래 여백은 0, 왼쪽 여백만 20px */
+}
