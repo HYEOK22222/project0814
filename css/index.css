@@ -22,7 +22,7 @@
 
 .hg-content {
   grid-area: content;
-  padding: 15px;
+  padding: 25px;
 }
 
 .hg-footer {
@@ -41,7 +41,7 @@
 }
 
 .demo-product-card {
-  background-color: #1c1d1f;
+  background-color: transparent;
   color: #ffffff;
   border: none;
   overflow: hidden;
@@ -108,6 +108,7 @@
   width: 18px;
   height: auto;
   outline: none;
+  padding-left: 8px;
 }
 
 .demo-nav input {
