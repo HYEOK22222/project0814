@@ -15,22 +15,17 @@
         <nav class="demo-nav">
           <div class="logo"><a href="index.html">전설의 시작</a></div>
           <div class="searchbox">
-            <input type="text" placeholder="  검색어를 입력하세요." />
+            <input
+              type="text"
+              class="searchbox_text"
+              placeholder="검색어를 입력하세요."
+            />
             <button>
               <img class="btn-img" src="search_icon.png" alt="검색버튼" />
             </button>
           </div>
           <ul class="menu-list">
             <li><a href="login-page.html" id="login-page">로그인</a></li>
-            <li>
-              <a
-                href="myorder.html"
-                id="myorder"
-                style="display: none"
-                class="loginout"
-                >내 주문 내역</a
-              >
-            </li>
             <li>
               <a href="mypage.html" style="display: none" class="loginout"
                 >내 정보</a
@@ -44,20 +39,41 @@
           </ul>
         </nav>
       </div>
-      <div class="user-container">
-        <div class="info">
+      <div class="user-container myorder_container">
+        <div class="info myorder_info">
           <h1>주문 내역</h1>
-          <br />
         </div>
         <form>
           <div class="orderInfo">
-            <div class="user-info" id="orderNum">주문 번호 :</div>
-            <div class="user-info" id="product">주문 상품 :</div>
-            <div class="user-info" id="price">가격 :</div>
-            <div class="user-info" id="quantity">수량 :</div>
-            <div class="user-info" id="orderPrice">총금액 :</div>
-            <div class="user-info" id="orderStatus">상태 :</div>
-            <div class="user-info" id="orderDate">주문일자 :</div>
+            <div class="user-info">
+              <span class="label">주문 번호 : </span>
+              <span class="value" id="orderNum">주문 내역이 없습니다.</span>
+              <!-- ⬅️ 빈칸에 글자를 채워줍니다 -->
+            </div>
+            <div class="user-info">
+              <span class="label">주문 상품 : </span>
+              <span class="value" id="product">주문 내역이 없습니다.</span>
+            </div>
+            <div class="user-info">
+              <span class="label">가격 : </span>
+              <span class="value" id="price">주문 내역이 없습니다.</span>
+            </div>
+            <div class="user-info">
+              <span class="label">수량 : </span>
+              <span class="value" id="quantity">주문 내역이 없습니다.</span>
+            </div>
+            <div class="user-info">
+              <span class="label">총금액 : </span>
+              <span class="value" id="orderPrice">주문 내역이 없습니다.</span>
+            </div>
+            <div class="user-info">
+              <span class="label">상태 : </span>
+              <span class="value" id="orderStatus">주문 내역이 없습니다.</span>
+            </div>
+            <div class="user-info">
+              <span class="label">주문일자 : </span>
+              <span class="value" id="orderDate">주문 내역이 없습니다.</span>
+            </div>
           </div>
         </form>
       </div>
