@@ -16,9 +16,9 @@
       <nav class="demo-nav">
         <div class="logo"><a href="index.html">전설의 시작</a></div>
         <ul class="menu-list">
-          <li><a href="">상품목록</a></li>
+          <li><a href="index.html">상품목록</a></li>
           <li><a href="">리뷰</a></li>
-          <li><a href="">주문</a></li>
+          <li><a href="order.html">주문</a></li>
           <li><a href="login-page.html">로그인</a></li>
         </ul>
       </nav>
@@ -90,7 +90,6 @@
       <nav class="detail-tab-menu">
         <button class="tab-btn active">상품상세</button>
         <button class="tab-btn">상품평 (120)</button>
-        <button class="tab-btn">상품문의</button>
         <button class="tab-btn">배송/교환안내</button>
       </nav>
 
@@ -145,8 +144,29 @@
       </div>
     </div>
 
-  <!-- 이 아래에 기존의 </main> 태그가 있어야 합니다 -->
+    <section id="delivery-info-section" class="review-area" style="margin-bottom: 50px;">
+      <h2 class="review-title">배송/교환안내</h2>
+      <div class="review-list" style="color: white; line-height: 1.8; background: #272727; padding: 30px; border-radius: 12px; border: 1px solid #505050;">
+        <h3 style="color: #d4af37; margin-bottom: 10px; font-size: 1.2rem;">🚚 배송 안내</h3>
+        <p style="margin-bottom: 25px; color: #ccc;">
+          - 배송비 : 기본 3,000원 (50,000원 이상 구매 시 무료배송)<br>
+          - 배송기간 : 결제 완료 후 1~3 영업일 이내 발송 (주말/공휴일 제외)
+        </p>
+        
+        <h3 style="color: #d4af37; margin-bottom: 10px; font-size: 1.2rem;">🔄 교환 및 반품 안내</h3>
+        <p style="color: #ccc;">
+          - 상품 수령 후 7일 이내에 고객센터를 통해 접수 가능합니다.<br>
+          - 단순 변심에 의한 교환/반품 시 왕복 배송비(6,000원)는 고객님 부담입니다.<br>
+          - 상품 훼손, 사용 흔적이 있는 경우 교환/반품이 불가합니다.
+        </p>
+      </div>
+    </section>
+
+  <!-- 기존의 꼬여있던 </main>들을 지우고 아래처럼 정리하세요 -->
   </main>
+  
+  <!-- 맨 위로 가기 (TOP) 버튼 -->
+  <button id="btn-back-to-top" title="맨 위로 가기">⬆<br>TOP</button>
 </body>
 <script>
   document.addEventListener("DOMContentLoaded", async () => {
@@ -215,13 +235,30 @@
     // 3. 상품평 탭 자동 스크롤
     // ==========================================
     const tabButtons = document.querySelectorAll(".tab-btn");
+    
     let reviewBtn = null;
-    tabButtons.forEach(btn => { if(btn.textContent.includes("상품평")) reviewBtn = btn; });
-    const reviewSection = document.getElementById("review-section");
+    let deliveryBtn = null; // 💡 배송 버튼을 담을 변수 추가
 
+    // 탭 버튼들 중에서 텍스트를 보고 각각 매칭해줍니다.
+    tabButtons.forEach(btn => { 
+      if(btn.textContent.includes("상품평")) reviewBtn = btn; 
+      if(btn.textContent.includes("배송/교환안내")) deliveryBtn = btn; 
+    });
+
+    const reviewSection = document.getElementById("review-section");
+    const deliverySection = document.getElementById("delivery-info-section"); // 💡 배송 섹션 아이디
+
+    // 리뷰 탭 클릭 시 스크롤
     if (reviewBtn && reviewSection) {
       reviewBtn.addEventListener("click", () => {
         reviewSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
+
+    // ⭐ [추가된 기능] 배송/교환안내 탭 클릭 시 스크롤
+    if (deliveryBtn && deliverySection) {
+      deliveryBtn.addEventListener("click", () => {
+        deliverySection.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
 
@@ -239,6 +276,12 @@
 
         if (result.success && result.data.length > 0) {
           reviewCountSpan.textContent = `(${result.data.length})`;
+          
+          // ⭐ 중간 탭 메뉴의 "상품평" 숫자도 실제 리뷰 개수에 맞춰 바꿔줍니다!
+          if (reviewBtn) {
+            reviewBtn.textContent = `상품평 (${result.data.length})`;
+          }
+
           reviewListDiv.innerHTML = result.data.map(review => `
             <div class="review-item">
               <div class="review-header">
@@ -250,6 +293,12 @@
           `).join('');
         } else {
           reviewCountSpan.textContent = `(0)`;
+          
+          // ⭐ 리뷰가 0개일 때도 탭 메뉴 숫자를 0으로 맞춰줍니다!
+          if (reviewBtn) {
+            reviewBtn.textContent = `상품평 (0)`;
+          }
+
           reviewListDiv.innerHTML = `<p class="empty-review">등록된 상품평이 없습니다. 첫 리뷰를 작성해보세요!</p>`;
         }
       } catch (error) {
@@ -312,7 +361,20 @@
         window.location.href = `order.html?id=${productId}`;
       });
     }
-  });
-</script>
+  const btnTop = document.getElementById("btn-back-to-top");
 
+    if (btnTop) {
+      // 💡 스크롤 관련 코드는 삭제했습니다!
+
+      // 버튼 클릭 시 맨 위로 스르륵 이동하기
+      btnTop.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
+    }
+
+  }); // <-- DOMContentLoaded 닫히는 괄호
+</script>
 </html>
