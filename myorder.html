@@ -14,16 +14,34 @@
       <div class="hg-header">
         <nav class="demo-nav">
           <div class="logo"><a href="index.html">전설의 시작</a></div>
+          <div class="searchbox">
+            <input type="text" placeholder="  검색어를 입력하세요." />
+            <button>
+              <img class="btn-img" src="search_icon.png" alt="검색버튼" />
+            </button>
+          </div>
           <ul class="menu-list">
-            <li><a href="">상품목록</a></li>
-            <li><a href="">리뷰</a></li>
-            <li><a href="">주문</a></li>
-            <li><a href="index.html">로그아웃</a></li>
+            <li><a href="login-page.html" id="login-page">로그인</a></li>
+            <li>
+              <a
+                href="myorder.html"
+                id="myorder"
+                style="display: none"
+                class="loginout"
+                >내 주문 내역</a
+              >
+            </li>
+            <li>
+              <a href="mypage.html" style="display: none" class="loginout"
+                >내 정보</a
+              >
+            </li>
+            <li>
+              <a href="" style="display: none" id="logout-btn" class="loginout"
+                >로그아웃</a
+              >
+            </li>
           </ul>
-          <input type="text" placeholder=" 검색어를 입력하세요." />
-          <button>
-            <img class="btn-img" src="search_icon.png" alt="검색버튼" />
-          </button>
         </nav>
       </div>
       <div class="user-container">
@@ -46,7 +64,7 @@
       <div class="hg-footer"></div>
     </section>
   </body>
-  <!-- <script>
+  <script>
     (async () => {
       try {
         const token = sessionStorage.getItem("accessToken");
@@ -82,5 +100,5 @@
       alert("로그아웃 되었습니다");
       window.location.href = "./index.html";
     });
-  </script> -->
+  </script>
 </html>
