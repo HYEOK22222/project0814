@@ -2,7 +2,7 @@
   border: 2px solid #505050;
   grid-area: content;
   width: 400px;
-  height: 400px;
+  height: flex;
   text-align: start;
   background: linear-gradient(
     135deg,
