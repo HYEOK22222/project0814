@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const $h4 = document.createElement("h4");
       const $p = document.createElement("p");
 
-      $a.setAttribute("href", "product-detail.html");
+      $a.href = `product-detail.html?id=${products[i].id}`;
       $div.setAttribute("class", "info");
 
       $h4.textContent = products[i].name;
