@@ -7,9 +7,23 @@
   <title>상품 상세 화면</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/product.css" />
+  <link rel="stylesheet" href="css/order.css" />
 </head>
 
 <body>
+  <div class="demo-holy-grid">
+    <header class="hg-header">
+      <nav class="demo-nav">
+        <div class="logo"><a href="index.html">전설의 시작</a></div>
+        <ul class="menu-list">
+          <li><a href="">상품목록</a></li>
+          <li><a href="">리뷰</a></li>
+          <li><a href="">주문</a></li>
+          <li><a href="login-page.html">로그인</a></li>
+        </ul>
+      </nav>
+    </header>
+
   <main class="product-detail-page">
     <section class="product-top-area">
       <div class="product-image-wrap">
@@ -88,6 +102,57 @@
         </div>
       </div>
     </section>
+    <!-- 기존 코드의 <section class="product-bottom-area"> ... </section> 바로 아래에 이 코드를 추가하세요 -->
+    
+    <section id="review-section" class="review-area">
+      <h2 class="review-title">상품평 <span class="review-count">(120)</span></h2>
+      <div class="review-list">
+        <!-- 첫 번째 리뷰 -->
+        <div class="review-item">
+          <div class="review-header">
+            <span class="reviewer-name">홍*동</span>
+            <span class="review-date">2026.08.17</span>
+            <span class="review-rating">⭐⭐⭐⭐⭐</span>
+          </div>
+          <div class="review-content">
+            정말 마음에 듭니다! 배송도 빠르고 상품도 좋네요. 다음에 또 구매할게요.
+          </div>
+        </div>
+        <!-- 두 번째 리뷰 -->
+        <div class="review-item">
+          <div class="review-header">
+            <span class="reviewer-name">김*수</span>
+            <span class="review-date">2026.08.15</span>
+            <span class="review-rating">⭐⭐⭐⭐</span>
+          </div>
+          <div class="review-content">
+            화면에서 본 것과 색상이 약간 다르지만, 전반적인 품질은 만족스럽습니다.
+          </div>
+        </div>
+        <div class="review-item">
+          <div class="review-header">
+            <span class="reviewer-name">황*규</span>
+            <span class="review-date">2026.08.11</span>
+            <span class="review-rating">⭐⭐</span>
+          </div>
+          <div class="review-content">
+            상품 품질이 전체적으로 만족스럽지가 않습니다.
+          </div>
+        </div>
+        <div class="review-item">
+          <div class="review-header">
+            <span class="reviewer-name">최*선</span>
+            <span class="review-date">2026.08.09</span>
+            <span class="review-rating">⭐⭐⭐⭐</span>
+          </div>
+          <div class="review-content">
+            매우 마음에 들지만, 배송이 너무 느렸어요.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- 이 아래에 기존의 </main> 태그가 있어야 합니다 -->
   </main>
 </body>
 <script>
@@ -130,6 +195,31 @@
       console.error("에러 발생:", error);
       document.querySelector(".product-name").textContent =
         "서버 연결에 실패했습니다.";
+    }
+  });
+  document.addEventListener("DOMContentLoaded", () => {
+    // 1. 모든 탭 버튼을 가져옵니다.
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    let reviewBtn = null;
+
+    // 2. 텍스트에 "상품평"이 포함된 버튼을 찾아냅니다.
+    tabButtons.forEach(btn => {
+      if(btn.textContent.includes("상품평")) {
+        reviewBtn = btn;
+      }
+    });
+
+    // 3. 새로 만든 리뷰 섹션 요소를 찾습니다.
+    const reviewSection = document.getElementById("review-section");
+
+    // 4. 클릭 이벤트를 추가하여 부드럽게 스크롤 시킵니다.
+    if (reviewBtn && reviewSection) {
+      reviewBtn.addEventListener("click", () => {
+        reviewSection.scrollIntoView({
+          behavior: "smooth",  /* 부드러운 스크롤 효과 */
+          block: "start"       /* 섹션의 맨 윗부분을 화면 상단에 맞춤 */
+        });
+      });
     }
   });
 </script>

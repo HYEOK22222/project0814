@@ -132,10 +132,12 @@ body {
   width: 500px;
   height: 700px;
   text-align: start;
-  background: linear-gradient(135deg,
-      rgba(97, 80, 25, 0.5) 0%,
-      #272727 25%,
-      #1c1d1f 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(97, 80, 25, 0.5) 0%,
+    #272727 25%,
+    #1c1d1f 100%
+  );
 
   border-radius: 12px;
 
@@ -187,4 +189,60 @@ body {
 .noneType-btn:hover {
   color: #d4af37;
   margin: 0px;
+}
+
+/* 리뷰 섹션 전체 영역 */
+.review-area {
+  margin-top: 50px;
+  padding: 40px 20px;
+  border-top: 2px solid #222;
+  background-color: #000;
+  border-radius: 16px;
+}
+
+.review-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #d4af37;
+}
+
+.review-count {
+  color: #d4af37;
+  font-size: 18px;
+}
+
+/* 리뷰 리스트 및 아이템 */
+.review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.review-item {
+  background: #ffffff;
+  border: 1px solid #ebebeb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #777;
+}
+
+.review-header .reviewer-name {
+  font-weight: 600;
+  color: #222;
+}
+
+.review-content {
+  font-size: 15px;
+  color: #444;
+  line-height: 1.6;
 }
