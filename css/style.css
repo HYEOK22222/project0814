@@ -525,3 +525,14 @@ a {
   border: 3px solid gold;
   border-radius: 18px;
 }
+
+.custom-select {
+  border: 1px solid #d4af37;
+  border-radius: 16px;
+  background-color: #1c1d1f;
+  color: white;
+  height: 40px;
+  padding: 0 15px;
+  width: 150px;
+  outline: none;
+}
