@@ -104,53 +104,46 @@
     </section>
     <!-- 기존 코드의 <section class="product-bottom-area"> ... </section> 바로 아래에 이 코드를 추가하세요 -->
     
+    <!-- 1. 리뷰 영역 (동적 렌더링용 빈 공간) -->
     <section id="review-section" class="review-area">
-      <h2 class="review-title">상품평 <span class="review-count">(120)</span></h2>
-      <div class="review-list">
-        <!-- 첫 번째 리뷰 -->
-        <div class="review-item">
-          <div class="review-header">
-            <span class="reviewer-name">홍*동</span>
-            <span class="review-date">2026.08.17</span>
-            <span class="review-rating">⭐⭐⭐⭐⭐</span>
-          </div>
-          <div class="review-content">
-            정말 마음에 듭니다! 배송도 빠르고 상품도 좋네요. 다음에 또 구매할게요.
-          </div>
-        </div>
-        <!-- 두 번째 리뷰 -->
-        <div class="review-item">
-          <div class="review-header">
-            <span class="reviewer-name">김*수</span>
-            <span class="review-date">2026.08.15</span>
-            <span class="review-rating">⭐⭐⭐⭐</span>
-          </div>
-          <div class="review-content">
-            화면에서 본 것과 색상이 약간 다르지만, 전반적인 품질은 만족스럽습니다.
-          </div>
-        </div>
-        <div class="review-item">
-          <div class="review-header">
-            <span class="reviewer-name">황*규</span>
-            <span class="review-date">2026.08.11</span>
-            <span class="review-rating">⭐⭐</span>
-          </div>
-          <div class="review-content">
-            상품 품질이 전체적으로 만족스럽지가 않습니다.
-          </div>
-        </div>
-        <div class="review-item">
-          <div class="review-header">
-            <span class="reviewer-name">최*선</span>
-            <span class="review-date">2026.08.09</span>
-            <span class="review-rating">⭐⭐⭐⭐</span>
-          </div>
-          <div class="review-content">
-            매우 마음에 들지만, 배송이 너무 느렸어요.
-          </div>
-        </div>
+      <div class="review-header-wrap">
+        <h2 class="review-title">상품평 <span class="review-count">(0)</span></h2>
+        <button id="btn-open-review-modal" class="btn-write-review">리뷰 작성하기</button>
+      </div>
+      
+      <!-- 자바스크립트를 통해 서버에서 받아온 리뷰 목록이 여기에 들어갑니다. -->
+      <div id="dynamic-review-list" class="review-list">
+        <p class="empty-review">불러오는 중...</p>
       </div>
     </section>
+
+    <!-- 2. 리뷰 등록 페이지 (모달 창) -->
+    <div id="review-modal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <h3 class="modal-title">리뷰 작성</h3>
+        
+        <div class="form-group">
+          <label for="rating-select">평점</label>
+          <select id="rating-select" class="review-input">
+            <option value="5">⭐⭐⭐⭐⭐ (5점)</option>
+            <option value="4">⭐⭐⭐⭐ (4점)</option>
+            <option value="3">⭐⭐⭐ (3점)</option>
+            <option value="2">⭐⭐ (2점)</option>
+            <option value="1">⭐ (1점)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="review-textarea">내용</label>
+          <textarea id="review-textarea" class="review-input" rows="5" placeholder="상품에 대한 솔직한 평가를 남겨주세요."></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button id="btn-cancel-modal" class="btn-modal cancel">취소</button>
+          <button id="btn-submit-review" class="btn-modal submit">등록</button>
+        </div>
+      </div>
+    </div>
 
   <!-- 이 아래에 기존의 </main> 태그가 있어야 합니다 -->
   </main>
@@ -221,6 +214,104 @@
         });
       });
     }
+  });
+  // --- 동적 리뷰 불러오기 및 모달 기능 추가 ---
+  document.addEventListener("DOMContentLoaded", () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("id") || 1;
+    
+    // API 주소
+    const baseUrl = `http://teacherdev09.kro.kr:10002/endpoint/api/products/${productId}/reviews`;
+
+    // 1. 리뷰 목록 불러오기 (GET)
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(baseUrl);
+        const result = await response.json();
+        
+        const reviewListDiv = document.getElementById("dynamic-review-list");
+        const reviewCountSpan = document.querySelector(".review-count");
+
+        if (result.success && result.data.length > 0) {
+          reviewCountSpan.textContent = `(${result.data.length})`;
+          reviewListDiv.innerHTML = result.data.map(review => `
+            <div class="review-item">
+              <div class="review-header">
+                <span class="reviewer-name">${review.author || '익명'}</span>
+                <span class="review-rating">${'⭐'.repeat(review.rating)}</span>
+              </div>
+              <div class="review-content">${review.content}</div>
+            </div>
+          `).join('');
+        } else {
+          reviewCountSpan.textContent = `(0)`;
+          reviewListDiv.innerHTML = `<p class="empty-review">등록된 상품평이 없습니다. 첫 리뷰를 작성해보세요!</p>`;
+        }
+      } catch (error) {
+        console.error("리뷰 조회 에러:", error);
+        document.getElementById("dynamic-review-list").innerHTML = 
+          `<p class="empty-review">리뷰를 불러오는데 실패했습니다.</p>`;
+      }
+    };
+
+    fetchReviews(); // 페이지 로드시 실행
+
+    // 2. 모달 열기/닫기 및 폼 전송
+    const modal = document.getElementById("review-modal");
+    const btnOpenModal = document.getElementById("btn-open-review-modal");
+    const btnCancel = document.getElementById("btn-cancel-modal");
+    const btnSubmit = document.getElementById("btn-submit-review");
+
+    // 리뷰 작성 모달 열기 (로그인 체크 가능 지점)
+    btnOpenModal.addEventListener("click", () => {
+      // 🔒 로그인 체크가 필요하다면 여기서 검증 로직을 넣습니다.
+      modal.classList.remove("hidden");
+    });
+
+    // 모달 닫기
+    btnCancel.addEventListener("click", () => {
+      modal.classList.add("hidden");
+      document.getElementById("review-textarea").value = ""; 
+    });
+
+    // 리뷰 등록하기 (POST)
+    btnSubmit.addEventListener("click", async () => {
+      const rating = document.getElementById("rating-select").value;
+      const content = document.getElementById("review-textarea").value.trim();
+
+      if (!content) {
+        alert("리뷰 내용을 입력해주세요.");
+        return;
+      }
+
+      try {
+        const response = await fetch(baseUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            rating: Number(rating),
+            content: content
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success || response.ok) {
+          alert("리뷰가 등록되었습니다!");
+          modal.classList.add("hidden"); 
+          document.getElementById("review-textarea").value = ""; 
+          
+          fetchReviews(); // 리뷰 목록을 새로고침하여 방금 쓴 글 노출
+        } else {
+          alert("리뷰 등록에 실패했습니다.");
+        }
+      } catch (error) {
+        console.error("리뷰 등록 에러:", error);
+        alert("서버 오류가 발생했습니다.");
+      }
+    });
   });
 </script>
 
