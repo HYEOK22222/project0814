@@ -224,3 +224,8 @@ input::placeholder {
   color: #ffffff; /* 원하는 색상 코드 */
   opacity: 1; /* 브라우저 기본 투명도를 없애서 더 선명하게 보이게 함 */
 }
+
+.product-quantity {
+  color: #cebb7b;
+  font-weight: bold;
+}

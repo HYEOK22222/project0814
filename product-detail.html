@@ -199,14 +199,16 @@
     }
 
     // 로그아웃 클릭 처리
-    logoutButtons.forEach(btn => {
-      btn.addEventListener("click", (e) => {
+    const realLogoutBtn = document.getElementById("logout-btn");
+    
+    if (realLogoutBtn) {
+      realLogoutBtn.addEventListener("click", (e) => {
         e.preventDefault(); 
         sessionStorage.removeItem("accessToken"); 
         alert("로그아웃 되었습니다.");
         window.location.reload(); 
       });
-    });
+    }
 
     // ==========================================
     // 공통 사용 변수 (상품 ID)
