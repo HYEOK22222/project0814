@@ -17,7 +17,7 @@
       <nav class="demo-nav">
 <div class="logo"><a href="index.html">전설의 시작</a></div>
         <div class="searchbox">
-        <input type="text" placeholder="  검색어를 입력하세요." />
+        <input type="text" class="searchbox_text" placeholder="검색어를 입력하세요." />
         <button>
           <img class="btn-img" src="search_icon.png" alt="검색버튼" />
         </button>
@@ -75,6 +75,13 @@
           <span class="quantity-label">수량</span>
           <div class="quantity-controls">
             <input class="input-qty" type="number" value="1" min="1" />
+          </div>
+        </div>
+
+        <div class="product-quantity" style="margin-top: 20px;">
+          <span class="quantity-label">재고</span>
+          <div class="quantity-controls">
+            <span id="stock-count" style="font-weight: bold; color: #ccc;">불러오는 중...</span>
           </div>
         </div>
 
@@ -233,6 +240,7 @@
         document.querySelector(".final-price").textContent = priceString;
         document.querySelector(".total-amount").textContent = priceString;
         document.querySelector(".content-description p").textContent = product.description;
+        document.querySelector("#stock-count").textContent = product.stockQuantity + "개";
       } else {
         document.querySelector(".product-name").textContent = "상품 정보가 없습니다.";
       }

@@ -17,7 +17,7 @@ body {
     "content content content"
     "footer footer footer";
   gap: 12px;
-  background-color: #272727;
+  background-color: #1c1d1f;
 
   min-height: 100vh;
   box-sizing: border-box;
@@ -52,7 +52,7 @@ body {
 }
 
 .demo-product-card {
-  background-color: #1c1d1f;
+  background-color: transparent;
   color: #ffffff;
   overflow: hidden;
 }
@@ -173,8 +173,8 @@ body {
 /* 여러 페이지에서 공통으로 쓰이는 강조 텍스트 색상 */
 .info {
   color: #d4af37;
-  background-color: #1c1d1f;
-  margin-bottom: 20px;
+  background-color: #272727;
+  margin-bottom: 30px;
   padding: 12px;
   border: 3px solid gold;
 }
@@ -389,6 +389,15 @@ body {
   font-size: 25px;
 }
 
+#loginPage-btn {
+  font-size: 25px;
+}
+
+#register-btn {
+  margin-top: 20px;
+  font-size: 25px;
+}
+
 a {
   text-decoration: none; /* 밑줄을 아예 없애줍니다 */
   color: inherit; /* 보라색으로 변하지 않고 원래 정해둔 글자색을 유지하게 합니다 */
@@ -444,4 +453,31 @@ a {
   border: 0px;
   background-color: #272727;
   color: white;
+}
+
+.loginpage_info {
+  color: #d4af37;
+}
+
+.searchbox_text {
+  padding-left: 15px;
+}
+
+.searchbox_text::placeholder {
+  color: #bec0bb;
+}
+
+.btn-img {
+  width: 18px;
+  height: auto;
+  outline: none;
+  padding-left: 8px;
+}
+
+.productcard2 {
+  font-size: 20px;
+}
+
+.product-quantity {
+  margin-bottom: 20px;
 }
