@@ -150,13 +150,33 @@
 </body>
 <script>
   document.addEventListener("DOMContentLoaded", async () => {
-    try {
-      const urlParams = new URLSearchParams(window.location.search);
-      const productId = urlParams.get("id") || 1;
+    // ==========================================
+    // 1. 공통 로그인 상태 확인 (sessionStorage 사용)
+    // ==========================================
+    const token = sessionStorage.getItem("accessToken");
+    
+    // HTML에 id="login-page"가 없으므로 href 속성으로 로그인 버튼을 찾도록 수정했습니다.
+    const loginButton = document.querySelector('a[href="login-page.html"]'); 
+    
+    if (token && loginButton) {
+      loginButton.style.display = "none";
+      const logout = document.querySelectorAll(".loginout");
+      logout.forEach(e => {
+        e.style.display = "inline";
+      });
+    }
 
-      const response = await fetch(
-        `http://teacherdev09.kro.kr:10002/endpoint/api/products/${productId}`,
-      );
+    // ==========================================
+    // 공통 사용 변수 (상품 ID)
+    // ==========================================
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("id") || 1;
+
+    // ==========================================
+    // 2. 상품 기본 정보 불러오기 (기존 코드 유지)
+    // ==========================================
+    try {
+      const response = await fetch(`http://teacherdev09.kro.kr:10002/endpoint/api/products/${productId}`);
 
       if (!response.ok) {
         throw new Error("상품 정보를 불러오는데 실패했습니다!");
@@ -166,67 +186,54 @@
 
       if (result.success) {
         const product = result.data;
-
-        document.querySelector(".product-category").textContent =
-          product.category;
-
+        document.querySelector(".product-category").textContent = product.category;
         document.querySelector(".product-name").textContent = product.name;
 
         const priceString = product.price.toLocaleString() + "원";
         document.querySelector(".final-price").textContent = priceString;
         document.querySelector(".total-amount").textContent = priceString;
-
-        document.querySelector(".content-description p").textContent =
-          product.description;
+        document.querySelector(".content-description p").textContent = product.description;
       } else {
-        // success가 false로 왔다면 에러 메시지 띄우기
         console.error(result.message);
-        document.querySelector(".product-name").textContent =
-          "상품 정보가 없습니다.";
+        document.querySelector(".product-name").textContent = "상품 정보가 없습니다.";
       }
     } catch (error) {
       console.error("에러 발생:", error);
-      document.querySelector(".product-name").textContent =
-        "서버 연결에 실패했습니다.";
+      document.querySelector(".product-name").textContent = "서버 연결에 실패했습니다.";
     }
-  });
-  document.addEventListener("DOMContentLoaded", () => {
-    // 1. 모든 탭 버튼을 가져옵니다.
+
+    // ==========================================
+    // 3. 상품평 탭 클릭 시 리뷰로 자동 스크롤 (기존 코드 유지)
+    // ==========================================
     const tabButtons = document.querySelectorAll(".tab-btn");
     let reviewBtn = null;
 
-    // 2. 텍스트에 "상품평"이 포함된 버튼을 찾아냅니다.
     tabButtons.forEach(btn => {
       if(btn.textContent.includes("상품평")) {
         reviewBtn = btn;
       }
     });
 
-    // 3. 새로 만든 리뷰 섹션 요소를 찾습니다.
     const reviewSection = document.getElementById("review-section");
 
-    // 4. 클릭 이벤트를 추가하여 부드럽게 스크롤 시킵니다.
     if (reviewBtn && reviewSection) {
       reviewBtn.addEventListener("click", () => {
         reviewSection.scrollIntoView({
-          behavior: "smooth",  /* 부드러운 스크롤 효과 */
-          block: "start"       /* 섹션의 맨 윗부분을 화면 상단에 맞춤 */
+          behavior: "smooth", 
+          block: "start"      
         });
       });
     }
-  });
-  // --- 동적 리뷰 불러오기 및 모달 기능 추가 ---
-  document.addEventListener("DOMContentLoaded", () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get("id") || 1;
-    
-    // API 주소
-    const baseUrl = `http://teacherdev09.kro.kr:10002/endpoint/api/products/${productId}/reviews`;
 
-    // 1. 리뷰 목록 불러오기 (GET)
+    // ==========================================
+    // 4. 동적 리뷰 불러오기 및 모달 기능 추가 (로그인 연동)
+    // ==========================================
+    const reviewsUrl = `http://teacherdev09.kro.kr:10002/endpoint/api/products/${productId}/reviews`;
+
+    // 리뷰 목록 불러오기 (GET)
     const fetchReviews = async () => {
       try {
-        const response = await fetch(baseUrl);
+        const response = await fetch(reviewsUrl);
         const result = await response.json();
         
         const reviewListDiv = document.getElementById("dynamic-review-list");
@@ -254,17 +261,23 @@
       }
     };
 
-    fetchReviews(); // 페이지 로드시 실행
+    fetchReviews(); // 리뷰 목록 즉시 호출
 
-    // 2. 모달 열기/닫기 및 폼 전송
+    // 모달 관련 요소 찾기
     const modal = document.getElementById("review-modal");
     const btnOpenModal = document.getElementById("btn-open-review-modal");
     const btnCancel = document.getElementById("btn-cancel-modal");
     const btnSubmit = document.getElementById("btn-submit-review");
 
-    // 리뷰 작성 모달 열기 (로그인 체크 가능 지점)
+    // 리뷰 작성 모달 열기 (🔒 로그인 여부 체크!)
     btnOpenModal.addEventListener("click", () => {
-      // 🔒 로그인 체크가 필요하다면 여기서 검증 로직을 넣습니다.
+      // 위쪽 1번 영역에서 만든 token 변수를 확인합니다.
+      if (!token) { 
+        alert("로그인이 필요한 서비스입니다.");
+        // 로그인 창으로 바로 보내고 싶으시다면 아래 주석을 해제하세요.
+        // location.href = "login-page.html";
+        return; 
+      }
       modal.classList.remove("hidden");
     });
 
@@ -285,10 +298,12 @@
       }
 
       try {
-        const response = await fetch(baseUrl, {
+        const response = await fetch(reviewsUrl, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            // 작성자 인증을 위해 서버로 보낼 때 토큰을 함께 전달합니다.
+            "Authorization": `Bearer ${token}` 
           },
           body: JSON.stringify({
             rating: Number(rating),
@@ -299,11 +314,11 @@
         const result = await response.json();
 
         if (result.success || response.ok) {
-          alert("리뷰가 등록되었습니다!");
+          alert("리뷰가 성공적으로 등록되었습니다!");
           modal.classList.add("hidden"); 
           document.getElementById("review-textarea").value = ""; 
           
-          fetchReviews(); // 리뷰 목록을 새로고침하여 방금 쓴 글 노출
+          fetchReviews(); // 방금 작성한 리뷰가 바로 보이도록 새로고침
         } else {
           alert("리뷰 등록에 실패했습니다.");
         }
@@ -312,6 +327,7 @@
         alert("서버 오류가 발생했습니다.");
       }
     });
+
   });
 </script>
 
