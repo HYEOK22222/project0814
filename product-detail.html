@@ -14,13 +14,18 @@
   <div class="demo-holy-grid">
     <header class="hg-header">
       <nav class="demo-nav">
-        <div class="logo"><a href="index.html">전설의 시작</a></div>
-        <ul class="menu-list">
-          <li><a href="">상품목록</a></li>
-          <li><a href="">리뷰</a></li>
-          <li><a href="">주문</a></li>
-          <li><a href="login-page.html">로그인</a></li>
-        </ul>
+<div class="logo"><a href="index.html">전설의 시작</a></div>
+        <div class="searchbox">
+        <input type="text" placeholder="  검색어를 입력하세요." />
+        <button>
+          <img class="btn-img" src="search_icon.png" alt="검색버튼" />
+        </button>
+        </div>
+         <ul class="menu-list">
+          <li><a href="login-page.html" id="login-page">로그인</a></li>
+          <li><a href="myorder.html" id="myorder" style="display: none;" class="loginout">내 주문 내역</a></li>
+          <li><a href="mypage.html" style="display: none;" class="loginout">내 정보</a></li>
+          <li><a href="" style="display: none;" id="logout-btn" class="loginout">로그아웃</a></li>
       </nav>
     </header>
 
@@ -186,7 +191,7 @@
     // 공통 사용 변수 (상품 ID)
     // ==========================================
     const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get("id") || 1;
+    const productId = urlParams.get("id") || 51;
 
     // ==========================================
     // 2. 상품 기본 정보 불러오기
@@ -303,7 +308,15 @@
         } else { alert("리뷰 등록에 실패했습니다."); }
       } catch (error) { alert("서버 오류가 발생했습니다."); }
     });
-
+    const btnBuy = document.querySelector(".btn-buy");
+    
+    if (btnBuy) {
+      btnBuy.addEventListener("click", () => {
+        // 💡 주문 페이지로 이동할 때, 어떤 상품을 주문하는지 알아야 하므로
+        // 현재 상품의 id 값을 주소 뒤에 달아서(order.html?id=번호) 보내줍니다!
+        window.location.href = `order.html?id=${productId}`;
+      });
+    }
   });
 </script>
 
