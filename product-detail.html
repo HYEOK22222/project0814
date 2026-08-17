@@ -304,7 +304,15 @@
         } else { alert("리뷰 등록에 실패했습니다."); }
       } catch (error) { alert("서버 오류가 발생했습니다."); }
     });
-
+    const btnBuy = document.querySelector(".btn-buy");
+    
+    if (btnBuy) {
+      btnBuy.addEventListener("click", () => {
+        // 💡 주문 페이지로 이동할 때, 어떤 상품을 주문하는지 알아야 하므로
+        // 현재 상품의 id 값을 주소 뒤에 달아서(order.html?id=번호) 보내줍니다!
+        window.location.href = `order.html?id=${productId}`;
+      });
+    }
   });
 </script>
 
