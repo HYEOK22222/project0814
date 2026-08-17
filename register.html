@@ -15,8 +15,8 @@
         <div class="info">아이디</div>
         <input
           class="signInput"
-          id="userId"
-          name="userId"
+          id="email"
+          name="email"
           type="text"
           placeholder="이메일을 입력하세요."
         />
@@ -56,30 +56,43 @@
     <script>
       document.querySelector("form").addEventListener("submit", async (e) => {
         e.preventDefault();
-        const email = e.target.userId.value;
+
+        const email = e.target.email.value.trim();
         const password = e.target.password.value;
+        const name = e.target.name.value.trim();
+        const address = e.target.address.value;
+        console.log(name, email, password, address);
+
         try {
+          // 서버 엔드포인트에 맞게 호출
           const response = await fetch(
-            "http://teacherdev09.kro.kr:10002/endpoint/api/users/login",
+            "http://teacherdev09.kro.kr:10002/endpoint/api/users/signup",
             {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email, password }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email,
+                password,
+                name,
+                address,
+              }),
             },
           );
-          if (!response.ok) {
-            throw new Error("로그인 정보 불일치");
-          }
+
           const data = await response.json();
-          alert("환영합니다");
-          window.location.href = "./index.html";
+          if (!response.ok) {
+            throw new Error("회원가입에 실패했습니다.");
+          }
+
+          alert("회원가입이 완료되었습니다.");
+          window.location.href = "./login-page.html";
         } catch (error) {
           alert(error.message);
         }
       });
-
-      const loginPageBtn = document.getElementById("loginPage-btn");
-      loginPageBtn.addEventListener("click", () => {
+      document.getElementById("loginPage-btn").addEventListener("click", () => {
         window.location.href = "./login-page.html";
       });
     </script>
