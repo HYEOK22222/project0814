@@ -154,11 +154,12 @@ body {
   padding: 50px 24px;
 
   box-sizing: border-box;
-  margin: 100px auto;
+  margin: 50px auto;
   display: flex;
   flex-direction: column;
 
-  justify-content: space-between;
+  justify-content: center;
+  gap: 40px;
   align-items: center;
 }
 
@@ -373,4 +374,44 @@ body {
   font-weight: bold;
   color: #d4af37;
   font-weight: 500;
+}
+
+#login-logo {
+  padding-top: 50px;
+  margin-bottom: -100px;
+}
+
+#login-btn {
+  font-size: 25px;
+}
+
+a {
+  text-decoration: none; /* 밑줄을 아예 없애줍니다 */
+  color: inherit; /* 보라색으로 변하지 않고 원래 정해둔 글자색을 유지하게 합니다 */
+}
+
+#btn-back-to-top {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  width: 60px;
+  height: 60px;
+  background-color: #d4af37;
+  color: #1c1d1f;
+  border: none;
+  border-radius: 50%; /* 완전한 동그라미 */
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  display: block; /* 처음엔 숨겨둡니다 (자바스크립트가 꺼내줄 예정) */
+  z-index: 9999; /* 화면의 가장 맨 위에 떠 있도록 설정 */
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
+}
+
+#btn-back-to-top:hover {
+  background-color: #cebb7b;
+  transform: translateY(-5px); /* 마우스 올리면 살짝 위로 들리는 효과 */
 }
