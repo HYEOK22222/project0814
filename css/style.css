@@ -502,7 +502,7 @@ a {
   justify-content: space-between; /* ⬅️ 마법의 단어! 왼쪽-오른쪽으로 쫙 밀어냅니다 */
   align-items: center;
   font-size: 20px;
-  color: white;
+  color: #d4af37;
   border-bottom: 1px solid #505050; /* 살짝 밑줄을 넣어주면 더 예쁩니다 (선택사항) */
   padding-bottom: 5px;
 }
