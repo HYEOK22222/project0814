@@ -33,6 +33,7 @@ body {
 .hg-content {
   grid-area: content;
   padding: 15px;
+  margin-bottom: 20px;
 }
 
 .hg-footer {
@@ -53,7 +54,6 @@ body {
 .demo-product-card {
   background-color: #1c1d1f;
   color: #ffffff;
-  border: none;
   overflow: hidden;
 }
 
@@ -173,6 +173,10 @@ body {
 /* 여러 페이지에서 공통으로 쓰이는 강조 텍스트 색상 */
 .info {
   color: #d4af37;
+  background-color: #1c1d1f;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 3px solid gold;
 }
 
 /* 공통 버튼 뼈대  */
