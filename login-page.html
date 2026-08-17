@@ -11,6 +11,9 @@
   <body>
     <div class="login-container">
       <div class="logo"><a href="index.html">전설의 시작</a></div>
+      <div class="info">
+        <h1>로그인</h1>
+      </div>
       <form>
         <div class="info">아이디</div>
         <input
@@ -50,6 +53,7 @@
               body: JSON.stringify({ email, password }),
             },
           );
+
           if (!response.ok) {
             throw new Error("로그인 정보 불일치");
           }
