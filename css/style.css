@@ -415,29 +415,3 @@ a {
   background-color: #cebb7b;
   transform: translateY(-5px); /* 마우스 올리면 살짝 위로 들리는 효과 */
 }
-
-.demo-nav button {
-  background: transparent;
-  color: #d4af37;
-  border: none;
-  padding: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.demo-nav .btn-img {
-  width: 18px;
-  height: auto;
-  outline: none;
-}
-
-.demo-nav input {
-  width: 400px;
-  height: 40px;
-  border-radius: 99px;
-  border: 0px;
-  background-color: #272727;
-  color: white;
-}
