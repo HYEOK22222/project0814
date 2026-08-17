@@ -10,6 +10,7 @@
 
   <body>
     <div class="login-container">
+      <div class="logo"><a href="index.html">전설의 시작</a></div>
       <div class="info">
         <h1>로그인</h1>
       </div>
@@ -56,27 +57,10 @@
           if (!response.ok) {
             throw new Error("로그인 정보 불일치");
           }
-
           const data = await response.json();
-
-          // 1. 토큰 저장
           sessionStorage.setItem("accessToken", data.data.accessToken);
           alert("환영합니다");
-
-          // ==========================================
-          // 💡 [수정된 부분] 이전 페이지로 돌아가는 로직
-          // ==========================================
-          const returnUrl = sessionStorage.getItem("returnUrl");
-
-          if (returnUrl) {
-            // 돌아갈 주소가 있다면, 세션에서 주소를 지워주고 그 페이지로 이동합니다.
-            sessionStorage.removeItem("returnUrl");
-            window.location.href = returnUrl;
-          } else {
-            // 따로 저장된 주소가 없다면 기존처럼 index 화면으로 보냅니다.
-            window.location.href = "./index.html";
-          }
-          // ==========================================
+          window.location.href = "./index.html";
         } catch (error) {
           alert(error.message);
         }
