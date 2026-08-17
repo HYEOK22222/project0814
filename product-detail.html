@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/product.css" />
   <link rel="stylesheet" href="css/order.css" />
+  <link rel="stylesheet" href="index.html" />
 </head>
 
 <body>
@@ -199,20 +200,22 @@
     }
 
     // 로그아웃 클릭 처리
-    logoutButtons.forEach(btn => {
-      btn.addEventListener("click", (e) => {
+    const realLogoutBtn = document.getElementById("logout-btn");
+    
+    if (realLogoutBtn) {
+      realLogoutBtn.addEventListener("click", (e) => {
         e.preventDefault(); 
         sessionStorage.removeItem("accessToken"); 
         alert("로그아웃 되었습니다.");
         window.location.reload(); 
       });
-    });
+    }
 
     // ==========================================
     // 공통 사용 변수 (상품 ID)
     // ==========================================
     const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get("id") || 51;
+    const productId = urlParams.get("id") || 1;
 
     // ==========================================
     // 2. 상품 기본 정보 불러오기
