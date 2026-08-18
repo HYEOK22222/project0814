@@ -226,6 +226,7 @@
     // ==========================================
     const urlParams = new URLSearchParams(window.location.search);
     const productId = urlParams.get("id");
+    const productstock = urlParams.get("stockQuantity")
 
     // ==========================================
     // 2. 상품 기본 정보 불러오기
@@ -388,7 +389,7 @@
         // ⭐ 2. 로그인이 되어있다면 정상적으로 주문 페이지로 이동
         // 💡 주문 페이지로 이동할 때, 어떤 상품을 주문하는지 알아야 하므로
         // 현재 상품의 id 값을 주소 뒤에 달아서(order.html?id=번호) 보내줍니다!
-        window.location.href = `order.html?id=${productId}`;
+        window.location.href = `order.html?id=${productId}&stockQuantity=${productstock}`;
       });
     }
   const btnTop = document.getElementById("btn-back-to-top");
