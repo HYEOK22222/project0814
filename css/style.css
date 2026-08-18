@@ -128,14 +128,6 @@ body {
 .searchbox {
   display: flex;
 }
-.demo-nav input {
-  width: 300px;
-  height: 40px;
-  border-radius: 8px;
-  border: 0px;
-  background-color: #272727;
-  color: white;
-}
 
 .login-container {
   border: 2px solid #505050;
@@ -177,6 +169,7 @@ body {
   margin-bottom: 30px;
   padding: 12px;
   border: 3px solid gold;
+  border-radius: 8px;
 }
 
 /* 공통 버튼 뼈대  */
@@ -449,10 +442,13 @@ a {
 .demo-nav input {
   width: 400px;
   height: 40px;
-  border-radius: 99px;
+  border-radius: 16px;
   border: 0px;
   background-color: #272727;
   color: white;
+  border: 1px solid #d4af37;
+  margin-left: 10px;
+  padding-left: 10px;
 }
 
 .loginpage_info {
@@ -480,4 +476,68 @@ a {
 
 .product-quantity {
   margin-bottom: 20px;
+}
+
+.myorder_info {
+  border-radius: 16px;
+  padding: 50px;
+  text-align: center;
+}
+
+.orderInfo {
+  margin: 0 auto; /* 박스 자체를 가운데로 */
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* 각 줄 사이의 간격 */
+  color: #d4af37;
+  margin-bottom: 30px;
+  padding: 16px;
+  border: 3px solid gold;
+  border-radius: 18px;
+}
+
+/* 한 줄(row)의 정렬 방식 */
+.user-info {
+  display: flex;
+  justify-content: space-between; /* ⬅️ 마법의 단어! 왼쪽-오른쪽으로 쫙 밀어냅니다 */
+  align-items: center;
+  font-size: 20px;
+  color: #d4af37;
+  border-bottom: 1px solid #505050; /* 살짝 밑줄을 넣어주면 더 예쁩니다 (선택사항) */
+  padding-bottom: 5px;
+}
+
+/* 왼쪽 글자(제목) 디자인 */
+.user-info .label {
+  color: #cebb7b; /* 금색으로 포인트 */
+}
+
+/* 오른쪽 글자(값) 디자인 */
+.user-info .value {
+  font-weight: bold; /* 값은 눈에 잘 띄게 굵게! */
+}
+
+.mypage_info {
+  color: #d4af37;
+  background-color: #272727;
+  margin-bottom: 30px;
+  padding: 16px;
+  border: 3px solid gold;
+  border-radius: 18px;
+}
+
+.custom-select {
+  border: 1px solid #d4af37;
+  border-radius: 16px;
+  background-color: #1c1d1f;
+  color: white;
+  height: 40px;
+  padding: 0 15px;
+  width: 150px;
+  outline: none;
+}
+
+.option-group .signInput {
+  width: 100%; /* 기존 인라인 스타일에 있던 너비 유지 */
+  margin: 0 0 0 20px; /* 위, 오른쪽, 아래 여백은 0, 왼쪽 여백만 20px */
 }

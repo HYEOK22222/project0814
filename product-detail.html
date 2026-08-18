@@ -8,7 +8,6 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/product.css" />
   <link rel="stylesheet" href="css/order.css" />
-  <link rel="stylesheet" href="index.html" />
 </head>
 
 <body>
@@ -17,11 +16,15 @@
       <nav class="demo-nav">
 <div class="logo"><a href="index.html">전설의 시작</a></div>
         <div class="searchbox">
-        <input type="text" class="searchbox_text" placeholder="검색어를 입력하세요." />
-        <button>
-          <img class="btn-img" src="search_icon.png" alt="검색버튼" />
-        </button>
-        </div>
+          <select id="category-select" class="custom-select">
+            <option value="">카테고리 선택</option>
+            <!-- 나머지는 자바스크립트(API)가 채워줄 겁니다! -->
+          </select>
+          <input type="text" class="searchbox_text" placeholder="검색어를 입력하세요." />
+            <button id="main-search-btn">
+              <img class="btn-img" src="search_icon.png" alt="검색버튼" />
+            </button>
+          </div>
          <ul class="menu-list">
           <li><a href="login-page.html" id="login-page">로그인</a></li>
           <li><a href="myorder.html" id="myorder" style="display: none;" class="loginout">내 주문 내역</a></li>
@@ -374,6 +377,16 @@
     
     if (btnBuy) {
       btnBuy.addEventListener("click", () => {
+        // ⭐ 1. 로그인 여부(토큰) 확인
+        if (!token) {
+          alert("로그인이 필요한 서비스입니다.");
+          // 💡 (선택사항) 로그인 후 다시 이 상품으로 돌아오게 만들고 싶다면 아래 두 줄 추가!
+          sessionStorage.setItem("returnUrl", window.location.href);
+          window.location.href = "login-page.html";
+          return; // 로그인 안 했으면 여기서 멈춤! (아래 코드로 넘어가지 않음)
+        }
+
+        // ⭐ 2. 로그인이 되어있다면 정상적으로 주문 페이지로 이동
         // 💡 주문 페이지로 이동할 때, 어떤 상품을 주문하는지 알아야 하므로
         // 현재 상품의 id 값을 주소 뒤에 달아서(order.html?id=번호) 보내줍니다!
         window.location.href = `order.html?id=${productId}&stockQuantity=${productstock}`;
@@ -382,8 +395,6 @@
   const btnTop = document.getElementById("btn-back-to-top");
 
     if (btnTop) {
-      // 💡 스크롤 관련 코드는 삭제했습니다!
-
       // 버튼 클릭 시 맨 위로 스르륵 이동하기
       btnTop.addEventListener("click", () => {
         window.scrollTo({
@@ -391,6 +402,65 @@
           behavior: "smooth"
         });
       });
+    }
+
+    // ==========================================
+    // 🔍 5. 공통 검색 리다이렉트 (index.html로 이동)
+    // ==========================================
+    const searchInput = document.querySelector(".searchbox input");
+    const searchBtn = document.querySelector("#main-search-btn");
+    const categorySelect = document.querySelector("#category-select");
+
+    if (searchInput && searchBtn) {
+      const executeSearchRedirect = () => {
+        const keyword = searchInput.value.trim();
+        const category = categorySelect ? categorySelect.value : "";
+
+        // 검색어도 없고 카테고리도 선택 안 했으면 막기
+        if (!keyword && !category) {
+          alert("검색어를 입력하거나 카테고리를 선택해주세요.");
+          return;
+        }
+        
+        // 검색어와 카테고리를 달고 index.html로 이동!
+        window.location.href = `index.html?keyword=${encodeURIComponent(keyword)}&category=${encodeURIComponent(category)}`;
+      };
+
+      searchBtn.addEventListener("click", executeSearchRedirect);
+      searchInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") executeSearchRedirect();
+      });
+      
+      if (categorySelect) {
+        categorySelect.addEventListener("change", executeSearchRedirect);
+      }
+    }
+
+    // ==========================================
+    // 🗂️ 6. 상단바 카테고리 API에서 동적으로 불러오기
+    // ==========================================
+    if (categorySelect && categorySelect.options.length <= 1) {
+      try {
+        const res = await fetch("http://teacherdev09.kro.kr:10002/endpoint/api/products?size=50");
+        const result = await res.json();
+
+        if (result.success && result.data && result.data.content) {
+          const allProducts = result.data.content;
+          
+          // 카테고리 중복 제거
+          const categories = [...new Set(allProducts.map((p) => p.category).filter(Boolean))];
+
+          // option 태그 추가
+          categories.forEach((category) => {
+            const option = document.createElement("option");
+            option.value = category;
+            option.textContent = category;
+            categorySelect.appendChild(option);
+          });
+        }
+      } catch (error) {
+        console.error("카테고리를 불러오지 못했습니다.", error);
+      }
     }
 
   }); // <-- DOMContentLoaded 닫히는 괄호

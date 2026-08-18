@@ -15,7 +15,15 @@
         <nav class="demo-nav">
           <div class="logo"><a href="index.html">전설의 시작</a></div>
           <div class="searchbox">
-            <input type="text" placeholder="  검색어를 입력하세요." />
+            <!-- ⬇️ 카테고리 선택창 추가 -->
+            <select id="category-select" class="custom-select">
+              <option value="">카테고리 선택</option>
+            </select>
+            <input
+              type="text"
+              class="searchbox_text"
+              placeholder="검색어를 입력하세요."
+            />
             <button>
               <img class="btn-img" src="search_icon.png" alt="검색버튼" />
             </button>
@@ -44,20 +52,41 @@
           </ul>
         </nav>
       </div>
-      <div class="user-container">
-        <div class="info">
+      <div class="user-container myorder_container">
+        <div class="info myorder_info">
           <h1>주문 내역</h1>
-          <br />
         </div>
         <form>
           <div class="orderInfo">
-            <div class="user-info" id="orderNum">주문 번호 :</div>
-            <div class="user-info" id="product">주문 상품 :</div>
-            <div class="user-info" id="price">가격 :</div>
-            <div class="user-info" id="quantity">수량 :</div>
-            <div class="user-info" id="orderPrice">총금액 :</div>
-            <div class="user-info" id="orderStatus">상태 :</div>
-            <div class="user-info" id="orderDate">주문일자 :</div>
+            <div class="user-info">
+              <span class="label">주문 번호 : </span>
+              <span class="value" id="orderNum">주문 내역이 없습니다.</span>
+              <!-- ⬅️ 빈칸에 글자를 채워줍니다 -->
+            </div>
+            <div class="user-info">
+              <span class="label">주문 상품 : </span>
+              <span class="value" id="product">주문 내역이 없습니다.</span>
+            </div>
+            <div class="user-info">
+              <span class="label">가격 : </span>
+              <span class="value" id="price">주문 내역이 없습니다.</span>
+            </div>
+            <div class="user-info">
+              <span class="label">수량 : </span>
+              <span class="value" id="quantity">주문 내역이 없습니다.</span>
+            </div>
+            <div class="user-info">
+              <span class="label">총금액 : </span>
+              <span class="value" id="orderPrice">주문 내역이 없습니다.</span>
+            </div>
+            <div class="user-info">
+              <span class="label">상태 : </span>
+              <span class="value" id="orderStatus">주문 내역이 없습니다.</span>
+            </div>
+            <div class="user-info">
+              <span class="label">주문일자 : </span>
+              <span class="value" id="orderDate">주문 내역이 없습니다.</span>
+            </div>
           </div>
         </form>
       </div>
@@ -83,10 +112,19 @@
         logoutButtons.forEach((e) => (e.style.display = "inline"));
       }
 
-      // 3. 서버에서 데이터 가져오기
+      // 3. 로그아웃 기능 (상단바 로그아웃 버튼 전용)
+      const logoutBtn = document.querySelector("#logout-btn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          sessionStorage.removeItem("accessToken");
+          alert("로그아웃 되었습니다");
+          window.location.href = "index.html"; // 로그아웃 후 메인으로 이동
+        });
+      }
+
+      // 4. 서버에서 데이터 가져오기
       try {
-        // 💡 주의: 현재 API 주소가 내 정보 조회(/users/me)로 되어있습니다.
-        // 나중에 백엔드에 '내 주문 내역' API가 만들어지면 그 주소로 바꿔야 합니다!
         const response = await fetch(
           "http://teacherdev09.kro.kr:10002/endpoint/api/users/me",
           {
@@ -100,29 +138,83 @@
         }
 
         const data = await response.json();
-        console.log("불러온 데이터:", data); // F12 개발자 도구에서 데이터를 확인할 수 있습니다.
+        console.log("불러온 데이터:", data);
 
         // 💡 나중에 주문 내역 API가 연결되면, 아래 주석을 풀고 데이터를 연결해주시면 됩니다!
         /*
-        document.querySelector("#orderNum").textContent = "주문 번호 : " + data.orderId;
-        document.querySelector("#product").textContent = "주문 상품 : " + data.productName;
-        document.querySelector("#price").textContent = "가격 : " + data.price;
-        // ... (나머지 정보들)
+        document.querySelector("#orderNum").textContent = data.orderId;
+        document.querySelector("#product").textContent = data.productName;
+        document.querySelector("#price").textContent = data.price;
+        // ... (나머지 정보들도 동일하게 값만 넣어주세요!)
         */
       } catch (error) {
-        alert("데이터를 불러오는데 실패했습니다: " + error.message);
+        console.error(
+          "주문 내역 데이터를 불러오는데 실패했습니다: " + error.message,
+        );
       }
-    });
 
-    // 4. 로그아웃 기능 (상단바 로그아웃 버튼 전용)
-    const logoutBtn = document.querySelector("#logout-btn");
-    if (logoutBtn) {
-      logoutBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        sessionStorage.removeItem("accessToken");
-        alert("로그아웃 되었습니다");
-        window.location.href = "index.html"; // 로그아웃 후 메인으로 이동
-      });
-    }
+      // ==========================================
+      // 🔍 5. 공통 검색 리다이렉트 (index.html로 이동)
+      // ==========================================
+      const searchInput = document.querySelector(".searchbox input");
+      const searchBtn = document.querySelector(".searchbox button");
+      const categorySelect = document.querySelector("#category-select");
+
+      if (searchInput && searchBtn) {
+        const executeSearchRedirect = () => {
+          const keyword = searchInput.value.trim();
+          const category = categorySelect ? categorySelect.value : "";
+
+          // 검색어도 없고 카테고리도 선택 안 했으면 막기
+          if (!keyword && !category) {
+            alert("검색어를 입력하거나 카테고리를 선택해주세요.");
+            return;
+          }
+
+          // 검색어와 카테고리를 달고 index.html로 이동!
+          window.location.href = `index.html?keyword=${encodeURIComponent(keyword)}&category=${encodeURIComponent(category)}`;
+        };
+
+        searchBtn.addEventListener("click", executeSearchRedirect);
+        searchInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") executeSearchRedirect();
+        });
+
+        if (categorySelect) {
+          categorySelect.addEventListener("change", executeSearchRedirect);
+        }
+      }
+
+      // ==========================================
+      // 🗂️ 6. 상단바 카테고리 API에서 동적으로 불러오기
+      // ==========================================
+      if (categorySelect && categorySelect.options.length <= 1) {
+        try {
+          const res = await fetch(
+            "http://teacherdev09.kro.kr:10002/endpoint/api/products?size=50",
+          );
+          const result = await res.json();
+
+          if (result.success && result.data && result.data.content) {
+            const allProducts = result.data.content;
+
+            // 카테고리 중복 제거
+            const categories = [
+              ...new Set(allProducts.map((p) => p.category).filter(Boolean)),
+            ];
+
+            // option 태그 추가
+            categories.forEach((category) => {
+              const option = document.createElement("option");
+              option.value = category;
+              option.textContent = category;
+              categorySelect.appendChild(option);
+            });
+          }
+        } catch (error) {
+          console.error("카테고리를 불러오지 못했습니다.", error);
+        }
+      }
+    }); // <-- DOMContentLoaded 닫히는 괄호
   </script>
 </html>

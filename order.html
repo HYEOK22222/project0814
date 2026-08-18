@@ -18,11 +18,22 @@
     <header class="hg-header">
       <nav class="demo-nav">
         <div class="logo"><a href="index.html">전설의 시작</a></div>
-        <ul class="menu-list">
-          <li><a href="">상품목록</a></li>
-          <li><a href="">주문</a></li>
-          <li><a href="login-page.html">로그인</a></li>
-        </ul>
+        <div class="searchbox">
+          <select id="category-select" class="custom-select">
+            <option value="">카테고리 선택</option>
+            <!-- 나머지는 자바스크립트(API)가 채워줄 겁니다! -->
+          </select>
+          <input type="text" class="searchbox_text" placeholder="검색어를 입력하세요." />
+            <button id="main-search-btn">
+              <img class="btn-img" src="search_icon.png" alt="검색버튼" />
+            </button>
+          </div>
+         <ul class="menu-list">
+          <li><a href="login-page.html" id="login-page">로그인</a></li>
+          <li><a href="myorder.html" id="myorder" style="display: none;" class="loginout">내 주문 내역</a></li>
+          <li><a href="mypage.html" style="display: none;" class="loginout">내 정보</a></li>
+          <li><a href="" style="display: none;" id="logout-btn" class="loginout">로그아웃</a></li>
+          </ul>
       </nav>
     </header>
 
@@ -69,14 +80,14 @@
 
               <div class="option-group" style="margin-top: 15px">
                 <label class="option-label" for="userName">주문자 성함</label>
-                <input type="text" id="userName" class="signInput" style="width: 100%; margin: 5px 0 0 0"
-                  placeholder="이름을 입력하세요" />
+                <!-- ⬇️ style 속성을 아예 지워버립니다 -->
+                <input type="text" id="userName" class="signInput" placeholder="이름을 입력하세요" />
               </div>
 
               <div class="option-group" style="margin-top: 15px">
                 <label class="option-label" for="userAddress">배송지 주소</label>
-                <input type="text" id="userAddress" class="signInput" style="width: 100%; margin: 5px 0 0 0"
-                  placeholder="배송 주소를 입력하세요" />
+                <!-- ⬇️ 여기도 style 속성을 지워줍니다 -->
+                <input type="text" id="userAddress" class="signInput" placeholder="배송 주소를 입력하세요" />
               </div>
             </div>
 
@@ -155,6 +166,90 @@
     const initialQty = Number(urlParams.get("stockQuantity"));
 
     document.addEventListener("DOMContentLoaded", async () => {
+      // ==========================================
+      // ⭐ 1. 로그인 체크 및 상단 메뉴 켜주기 (추가된 부분)
+      // ==========================================
+      const token = sessionStorage.getItem("accessToken");
+      
+      // 만약 토큰이 없다면 (비로그인 상태로 주소창을 치고 들어왔다면) 튕겨냅니다!
+      if (!token) {
+        alert("로그인이 필요한 페이지입니다.");
+        window.location.href = "login-page.html";
+        return; 
+      }
+
+      // 로그인 상태라면 상단바 메뉴를 바꿔줍니다.
+      const loginButton = document.querySelector("#login-page");
+      const logoutButtons = document.querySelectorAll(".loginout");
+      if (loginButton) loginButton.style.display = "none";
+      logoutButtons.forEach((e) => (e.style.display = "inline"));
+
+      // 로그아웃 기능 연결
+      const logoutBtn = document.querySelector("#logout-btn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          sessionStorage.removeItem("accessToken");
+          alert("로그아웃 되었습니다");
+          window.location.href = "./index.html";
+        });
+      }
+
+      // ==========================================
+      // ⭐ 2. 공통 검색 및 카테고리 기능 (추가된 부분)
+      // ==========================================
+      const searchInput = document.querySelector(".searchbox input");
+      const searchBtn = document.querySelector("#main-search-btn");
+      const categorySelect = document.querySelector("#category-select");
+
+      if (searchInput && searchBtn) {
+        const executeSearchRedirect = () => {
+          const keyword = searchInput.value.trim();
+          const category = categorySelect ? categorySelect.value : "";
+
+          if (!keyword && !category) {
+            alert("검색어를 입력하거나 카테고리를 선택해주세요.");
+            return;
+          }
+          window.location.href = `index.html?keyword=${encodeURIComponent(keyword)}&category=${encodeURIComponent(category)}`;
+        };
+
+        searchBtn.addEventListener("click", executeSearchRedirect);
+        searchInput.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") executeSearchRedirect();
+        });
+        if (categorySelect) {
+          categorySelect.addEventListener("change", executeSearchRedirect);
+        }
+      }
+
+      if (categorySelect && categorySelect.options.length <= 1) {
+        try {
+          const res = await fetch("http://teacherdev09.kro.kr:10002/endpoint/api/products?size=50");
+          const result = await res.json();
+
+          if (result.success && result.data && result.data.content) {
+            const allProducts = result.data.content;
+            const categories = [...new Set(allProducts.map((p) => p.category).filter(Boolean))];
+
+            categories.forEach((category) => {
+              const option = document.createElement("option");
+              option.value = category;
+              option.textContent = category;
+              categorySelect.appendChild(option);
+            });
+          }
+        } catch (error) {
+          console.error("카테고리를 불러오지 못했습니다.", error);
+        }
+      }
+
+      // ==========================================
+      // ⬇️ 기존 상품 데이터 불러오기 코드 (그대로 둡니다)
+      // ==========================================
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get("productId") || 1;
+      const initialQty = urlParams.get("quantity") || 1;
 
       qtyInput.value = 1;
 
